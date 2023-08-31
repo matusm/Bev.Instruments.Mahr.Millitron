@@ -19,7 +19,6 @@ namespace Bev.Instruments.Mahr.Millitron
         public Millitron1240(string port)
         {
             StartDate = DateTime.UtcNow;
-            DevicePort = port.Trim();
             serialPort = new SerialPort(DevicePort, 9600, Parity.None, 8, StopBits.One)
             {
                 Handshake = Handshake.None,
@@ -33,15 +32,17 @@ namespace Bev.Instruments.Mahr.Millitron
             settlingTime = 10;  // quick and dirty
         }
 
-        public string DevicePort { get; }
+        public string DevicePort => serialPort.PortName;
         public string InstrumentManufacturer { get; private set; }
         public string InstrumentType { get; private set; }
         public string InstrumentSerialNumber => "---"; // no documented way to obtain the serial number
         public string InstrumentFirmewareVersion { get; private set; }
+        public string InstrumentID => $"{InstrumentManufacturer} {InstrumentType} {InstrumentFirmewareVersion} @ {DevicePort}";
         public DateTime StartDate { get; }
         public double IntegrationTime { get; private set; } // Messwertintegrationszeit (p71)
         public double CorrectionProbeA => corrFactorA;
         public double CorrectionProbeB => corrFactorB;
+        public double ResolutionEnhancement => resolutionEnhancement;
         public int SettlingTime // in s !
         {
             get { return settlingTime; }

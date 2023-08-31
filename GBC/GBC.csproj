@@ -67,6 +67,7 @@
     <Compile Include="GaugeBlock\MaterialsCollection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserParameters.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

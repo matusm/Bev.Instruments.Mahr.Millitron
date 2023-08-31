@@ -34,6 +34,7 @@ namespace GBC
             using (new InfoOperation("initializing probe mover vor comparator"))
             {
                 probeMover = new NullProbeMover(); // here we must chose the correct one
+                //probeMover = new ConradProbeMover(conradPort, 1);
                 comparator = new Comparator(millitron, probeMover);
             }
 
@@ -44,9 +45,9 @@ namespace GBC
             }
             #endregion
 
-
-
-
+            DiagnosticOutput();
+            UserParameters userParameters = new UserParameters();
+            userParameters.QueryUserInput();
 
 
             // test cases
@@ -55,6 +56,31 @@ namespace GBC
             Console.WriteLine();
             Console.WriteLine($"X-Y: {x-y:F1} nm");
             millitron.Reset();
+
+
+            /********************************************************/
+
+
+            void DiagnosticOutput()
+            {
+                ConsoleUI.WriteLine();
+                ConsoleUI.WriteLine("Komparator");
+                ConsoleUI.WriteLine(string.Format("  {0}", millitron.InstrumentID));
+                ConsoleUI.WriteLine(string.Format("  Wartezeit: {0} s", millitron.SettlingTime));
+                //ConsoleUI.WriteLine(string.Format("  Tasterhubzeit: {0} s", (double)liftDelay / 1000.0));
+                ConsoleUI.WriteLine(string.Format("  Faktor A: {0,7:0.0000}", millitron.CorrectionProbeA));
+                ConsoleUI.WriteLine(string.Format("  Faktor B: {0,7:0.0000}", millitron.CorrectionProbeB));
+                ConsoleUI.WriteLine(string.Format("  Auflösungserhöhung: {0}", millitron.ResolutionEnhancement));
+                ConsoleUI.WriteLine(string.Format("  Messwertintegrationszeit: {0:0.0000} s", millitron.IntegrationTime));
+                ConsoleUI.WriteLine("Thermometer");
+                ConsoleUI.WriteLine("  " + environment.TransmitterID);
+                ConsoleUI.WriteLine("Kalibrierumfang");
+                //if (ConsoleUI.FlagCenter)
+                //    ConsoleUI.WriteLine(string.Format("  Mittenmassmessung ({0} x)", ConsoleUI.NumRep));
+                //if (ConsoleUI.Flag5Point)
+                //    ConsoleUI.WriteLine(string.Format("  Abweichungsspanne ({0} x)", ConsoleUI.NumRep5));
+                ConsoleUI.WriteLine();
+            }
 
         }
     }

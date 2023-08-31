@@ -18,6 +18,7 @@ namespace GBC
         public double TemperatureRange => temperature.Range;
         public double TemperatureDrift => temperature.MostRecentValue - temperature.FirstValue;
         public int SampleSize => (int)temperature.SampleSize;
+        public string TransmitterID => transmitter.InstrumentID;
 
         public void Update()
         {
