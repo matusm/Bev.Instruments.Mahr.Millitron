@@ -16,13 +16,30 @@ namespace GBC
             string conradPort = "COM12";
             string vaisalaPort = "10.10.10.98";
 
+            Console.Clear();
+            ConsoleUI.Welcome();
+            ConsoleUI.WriteLine();
+
             // instantiate all hardware objects
-            Millitron1240 millitron = new Millitron1240(mahrPort);
-            IProbeMover probeMover = new NullProbeMover();
-            IThermoHygrometer thTransmitter = new VaisalaHmtThermometer(vaisalaPort);
+            Millitron1240 millitron;
+            IProbeMover probeMover;
+            Environment environment;
+            Comparator comparator;
+
+            using (new InfoOperation("initializing comparator"))
+            {
+                millitron = new Millitron1240(mahrPort);
+            }
+
+            using(new InfoOperation("initializing thermo-hygrometer"))
+            {
+                IThermoHygrometer thTransmitter = new VaisalaHmtThermometer(vaisalaPort);
+                environment = new Environment(thTransmitter);
+            }
+            
+            probeMover = new NullProbeMover();
             // instantiate high level objects 
-            Comparator comparator = new Comparator(millitron, probeMover);
-            Environment environment = new Environment(thTransmitter);
+            comparator = new Comparator(millitron, probeMover);
 
 
 

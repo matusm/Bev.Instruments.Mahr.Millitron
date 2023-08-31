@@ -6,10 +6,10 @@ namespace Bev.Instruments.Mahr.Millitron
     {
         private readonly ConradRelais conradRelais;
 
-        public ConradProbeMover(string comPort)
+        public ConradProbeMover(string comPort, int relaisNumber)
         {
             conradRelais = new ConradRelais(comPort);
-            RelaisNumber = 1; // default
+            RelaisNumber = relaisNumber;
         }
 
         public int RelaisNumber { get; set; }
