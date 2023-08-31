@@ -20,7 +20,7 @@ namespace GBC
             ConsoleUI.Welcome();
             ConsoleUI.WriteLine();
 
-            // instantiate all hardware objects
+            #region Instantiate all hardware objects
             Millitron1240 millitron;
             IProbeMover probeMover;
             Environment environment;
@@ -31,15 +31,18 @@ namespace GBC
                 millitron = new Millitron1240(mahrPort);
             }
 
+            using (new InfoOperation("initializing probe mover vor comparator"))
+            {
+                probeMover = new NullProbeMover(); // here we must chose the correct one
+                comparator = new Comparator(millitron, probeMover);
+            }
+
             using(new InfoOperation("initializing thermo-hygrometer"))
             {
                 IThermoHygrometer thTransmitter = new VaisalaHmtThermometer(vaisalaPort);
                 environment = new Environment(thTransmitter);
             }
-            
-            probeMover = new NullProbeMover();
-            // instantiate high level objects 
-            comparator = new Comparator(millitron, probeMover);
+            #endregion
 
 
 
@@ -52,8 +55,6 @@ namespace GBC
             Console.WriteLine();
             Console.WriteLine($"X-Y: {x-y:F1} nm");
             millitron.Reset();
-
-
 
         }
     }

@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="At.Matus.DataSeriesPod">
+      <HintPath>..\..\DataSeriesPod\bin\Release\At.Matus.DataSeriesPod.dll</HintPath>
+    </Reference>
     <Reference Include="At.Matus.StatisticPod">
       <HintPath>..\..\At.Matus.StatisticPod\bin\Release\At.Matus.StatisticPod.dll</HintPath>
     </Reference>
