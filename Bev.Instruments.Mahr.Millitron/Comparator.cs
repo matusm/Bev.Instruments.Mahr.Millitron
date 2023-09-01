@@ -63,7 +63,7 @@ namespace Bev.Instruments.Mahr.Millitron
             {
                 Thread.Sleep(Math.Abs(_pollPeriod - millitron.QueryDuration));
                 answ = millitron.Query("M");
-            } while (answ.Contains('E'));
+            } while (IsErrorReply(answ));
             answ = answ.Remove(0, Math.Min(3, answ.Length));
             double d = millitron.ParseDoubleFrom(answ);
             return millitron.ConvertRawToNm(d);
@@ -77,8 +77,17 @@ namespace Bev.Instruments.Mahr.Millitron
             {
                 Thread.Sleep(Math.Abs(_pollPeriod - millitron.QueryDuration));
                 answ = millitron.Query("M");
-            } while (!answ.Contains('E'));
+            } while (!IsErrorReply(answ));
         }
 
+        private bool IsErrorReply(string answer)
+        {
+            if (answer.Contains('E')) 
+                return true;
+            double x = millitron.ParseDoubleFrom(answer);
+            if(double.IsNaN(x)) 
+                return true;
+            return false;
+        }
     }
 }
