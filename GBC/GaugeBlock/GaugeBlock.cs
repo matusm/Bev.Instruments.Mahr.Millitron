@@ -2,7 +2,7 @@
 {
     public class GaugeBlock
     {
-        public GaugeBlock(string designation, string manufacturer, double nominalLength, GaugeBlockMaterial material, double? deviation)
+        public GaugeBlock(string manufacturer, string designation, double nominalLength, GaugeBlockMaterial material, double? deviation)
         {
             Designation = designation;
             Manufacturer = manufacturer;
@@ -19,7 +19,7 @@
             Temperature = referenceTemperature;
         }
 
-        public GaugeBlock(string designation, string manufacturer, double nominalLength, GaugeBlockMaterial material) : this(designation, manufacturer, nominalLength, material, null) { }
+        public GaugeBlock(string manufacturer, string designation, double nominalLength, GaugeBlockMaterial material) : this(manufacturer, designation, nominalLength, material, null) { }
 
         public string Designation { get; }
         public string Manufacturer { get; }

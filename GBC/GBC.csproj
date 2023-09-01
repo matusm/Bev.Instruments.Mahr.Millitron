@@ -72,7 +72,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Session\UserParameters.cs" />
+    <Compile Include="Session\SessionData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

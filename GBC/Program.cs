@@ -14,6 +14,8 @@ namespace GBC
         static void Main(string[] args)
         {
             Settings settings = new Settings();
+            GaugeBlock preufling;
+            GaugeBlock normal;
 
             Console.Clear();
             ConsoleUI.Welcome();
@@ -45,8 +47,10 @@ namespace GBC
             #endregion
 
             DiagnosticOutput();
-            UserParameters userParameters = new UserParameters();
-            userParameters.QueryUserInput();
+            SessionData sessionData = new SessionData();
+            sessionData.QuerySessionData();
+            preufling = sessionData.QueryTestBlock();
+            normal = sessionData.QueryStandardBlock();
 
 
             // test cases

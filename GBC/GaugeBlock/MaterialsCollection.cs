@@ -34,7 +34,7 @@ namespace GBC
         }
 
         private readonly List<GaugeBlockMaterial> materials;
-        private readonly GaugeBlockMaterial nullMaterial = new GaugeBlockMaterial("X", "nicht spezifiziert", "not specified", 0, 0);
+        private readonly GaugeBlockMaterial nullMaterial = new GaugeBlockMaterial("-", "nicht spezifiziert", "not specified", 0, 0);
 
 
     }
