@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using Bev.Instruments.Mahr.Millitron;
 using Bev.UI;
+using GBC.Properties;
 
 namespace GBC
 {
@@ -12,9 +13,7 @@ namespace GBC
     {
         static void Main(string[] args)
         {
-            string mahrPort = "COM1";
-            string conradPort = "COM12";
-            string vaisalaPort = "10.10.10.98";
+            Settings settings = new Settings();
 
             Console.Clear();
             ConsoleUI.Welcome();
@@ -28,19 +27,19 @@ namespace GBC
 
             using (new InfoOperation("initializing comparator"))
             {
-                millitron = new Millitron1240(mahrPort);
+                millitron = new Millitron1240(settings.ComPortMillitron);
             }
 
-            using (new InfoOperation("initializing probe mover vor comparator"))
+            using (new InfoOperation("initializing probe mover for comparator"))
             {
                 probeMover = new NullProbeMover(); // here we must chose the correct one
-                //probeMover = new ConradProbeMover(conradPort, 1);
+                //probeMover = new ConradProbeMover(settings.ComPortConrad, settings.ChannelConrad);
                 comparator = new Comparator(millitron, probeMover);
             }
 
             using(new InfoOperation("initializing thermo-hygrometer"))
             {
-                IThermoHygrometer thTransmitter = new VaisalaHmtThermometer(vaisalaPort);
+                IThermoHygrometer thTransmitter = new VaisalaHmtThermometer(settings.IPEnvironment);
                 environment = new Environment(thTransmitter);
             }
             #endregion
