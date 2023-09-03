@@ -14,8 +14,8 @@ namespace GBC
         static void Main(string[] args)
         {
             Settings settings = new Settings();
-            GaugeBlock preufling;
-            GaugeBlock normal;
+            GaugeBlock preuflingGB;
+            GaugeBlock normalGB;
 
             Console.Clear();
             ConsoleUI.Welcome();
@@ -47,22 +47,112 @@ namespace GBC
             #endregion
 
             DiagnosticOutput();
+
+
             SessionData sessionData = new SessionData();
             sessionData.QuerySessionData();
-            preufling = sessionData.QueryTestBlock();
-            normal = sessionData.QueryStandardBlock();
+            preuflingGB = sessionData.QueryTestBlock();
+            normalGB = sessionData.QueryStandardBlock();
+
+            #region Center length measurement loop
+            CenterDataCollection centerDataCollection = new CenterDataCollection();
+            int numOutlierCenter = 0;
+            if (true) // TODO from command line option
+            {
+                bool outlierDetected;
+                environment.Update();
+                
+                outlierDetected = false;
+                CenterData dataPoint = new CenterData(); // just to suppress compiler errors
+                for (int i = 0; i <settings.Loops; i++)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Bestimmung des Mittenmasses");
+                    if (i > 0) Console.WriteLine($"(letzter Wert: {dataPoint.DiffCenter} nm)\n");
+                    if (outlierDetected) Console.Write("! Wiederholung ! ");
+                    Console.WriteLine($"{i+1}. von {settings.Loops} Messungen");
+
+                    double n1 = comparator.MakeMeasurement("N", settings.LiftDelay);
+                    double p1 = comparator.MakeMeasurement("P", settings.LiftDelay);
+                    double p2 = comparator.MakeMeasurement("P", settings.LiftDelay);
+                    double n2 = comparator.MakeMeasurement("N", settings.LiftDelay);
+
+                    dataPoint = new CenterData(n1, p1, p2, n2);
+                    outlierDetected = dataPoint.IsOutlier(settings.OutlierThreshold);
+                    environment.Update();
+
+                    if (outlierDetected)
+                    {
+                        numOutlierCenter++;
+                        i--;
+                    }
+                    else
+                    {
+                        centerDataCollection.Add(dataPoint);
+                    }
+                }
+                // it is necessary to set the temperatures in advance
+                normalGB.Temperature = environment.Temperature;
+                preuflingGB.Temperature = environment.Temperature;
+                preuflingGB.CalibrateWith(normalGB, centerDataCollection.AverageDiff/1000);
+
+            }
+            #endregion
+
+            #region 5-point measurement loop
+            VariationDataCollection variationDataCollection = new VariationDataCollection();
+            int numOutlier5Point = 0;
+            if (true)
+            {
+                environment.Update();
+                for (int i = 0; i < settings.Loops5Point; i++)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Bestimmung der Abweichungsspanne (Normal kann entfernt werden)");
+                    Console.WriteLine($"{i + 1}. von {settings.Loops5Point} Messungen");
+                    Console.WriteLine(GbTextGraph(5));
+                    // Antastsequenz: M C M A M B M D M
+                    double m = comparator.MakeMeasurement("M", settings.LiftDelay);
+                    SimpleDataPoint dataPointC = MeasureCorner("C", m);
+                    SimpleDataPoint dataPointA = MeasureCorner("A", dataPointC.N2);
+                    SimpleDataPoint dataPointB = MeasureCorner("B", dataPointA.N2);
+                    SimpleDataPoint dataPointD = MeasureCorner("D", dataPointB.N2);
+
+                    var variationData = new VariationData(dataPointA.Diff, dataPointB.Diff, dataPointC.Diff, dataPointD.Diff);
+                    variationDataCollection.Add(variationData);
+                }
+            }
+            #endregion
 
 
-            // test cases
-            var x = comparator.MakeMeasurement("X");
-            var y = comparator.MakeMeasurement("Y");
-            Console.WriteLine();
-            Console.WriteLine($"X-Y: {x-y:F1} nm");
             millitron.Reset();
 
 
-            /********************************************************/
+            /******************************************************************************/
+            #region Local functions
+            SimpleDataPoint MeasureCorner(string cornerName, double previousCenterReading)
+            {
+                bool outlierDetected;
+                double m1, m2, p;
+                m2 = previousCenterReading;
+                SimpleDataPoint cornerValue;
+                do
+                {
+                    m1 = m2;
+                    p = comparator.MakeMeasurement(cornerName, settings.LiftDelay);
+                    m2 = comparator.MakeMeasurement("M", settings.LiftDelay);
+                    cornerValue = new SimpleDataPoint(m1, p, m2);
+                    outlierDetected = cornerValue.IsOutlier(settings.OutlierThreshold5Point);
+                    if (outlierDetected)
+                    { 
+                        Console.WriteLine("! Wiederholung! ");
+                        numOutlier5Point++;
+                    }
+                } while (outlierDetected);
+                return cornerValue;
+            }
 
+            /******************************************************************************/
 
             void DiagnosticOutput()
             {
@@ -84,6 +174,23 @@ namespace GBC
                 //    ConsoleUI.WriteLine(string.Format("  Abweichungsspanne ({0} x)", ConsoleUI.NumRep5));
                 ConsoleUI.WriteLine();
             }
+
+            /******************************************************************************/
+
+            string GbTextGraph(int leadingSpaces)
+            {
+                string sSpaces = new string(' ', leadingSpaces);
+                string bild = "\n";
+                bild += sSpaces + "┌───────────────────┐\n";
+                bild += sSpaces + "│ A               B │\n";
+                bild += sSpaces + "│         M         │\n";
+                bild += sSpaces + "│ C               D │\n";
+                bild += sSpaces + "└───────────────────┘\n";
+                return bild;
+            }
+
+            #endregion
+            /******************************************************************************/
 
         }
     }

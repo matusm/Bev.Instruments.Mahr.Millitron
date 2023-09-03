@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Session\CenterData.cs" />
     <Compile Include="Environmental\DummyThermometer.cs" />
     <Compile Include="Environmental\Environment.cs" />
     <Compile Include="Environmental\VaisalaHmtThermometer.cs" />
@@ -72,7 +73,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Session\CenterDataCollection.cs" />
     <Compile Include="Session\SessionData.cs" />
+    <Compile Include="Session\VariationData.cs" />
+    <Compile Include="Session\SimpleDataPoint.cs" />
+    <Compile Include="Session\VariationDataCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
