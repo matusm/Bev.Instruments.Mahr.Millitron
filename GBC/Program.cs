@@ -15,8 +15,6 @@ namespace GBC
         {
             Settings settings = new Settings();
             MyCommandLine options = new MyCommandLine(args);
-            GaugeBlock preuflingGB;
-            GaugeBlock normalGB;
 
             Console.Clear();
             ConsoleUI.Welcome();
@@ -53,14 +51,14 @@ namespace GBC
             }
             #endregion
 
-            DiagnosticOutput();
-
+            DisplayStartInfo();
 
             SessionData sessionData = new SessionData();
             sessionData.QuerySessionData();
-            preuflingGB = sessionData.QueryTestBlock();
-            normalGB = new GaugeBlock();
-            if(options.PerformCenter) normalGB = sessionData.QueryStandardBlock();
+            GaugeBlock preuflingGB = sessionData.QueryTestBlock();
+            GaugeBlock normalGB = new GaugeBlock();
+            if(options.PerformCenter) 
+                normalGB = sessionData.QueryStandardBlock();
 
             #region Center length measurement loop
             CenterDataCollection centerDataCollection = new CenterDataCollection();
@@ -169,7 +167,7 @@ namespace GBC
 
             /******************************************************************************/
 
-            void DiagnosticOutput()
+            void DisplayStartInfo()
             {
                 ConsoleUI.WriteLine();
                 ConsoleUI.WriteLine("Komparator");

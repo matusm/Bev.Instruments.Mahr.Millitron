@@ -118,7 +118,8 @@ namespace Bev.Instruments.Mahr.Millitron
             string answ = Read1240();
             // following line is for debuging only
             // if(answ.Contains('E')) Console.WriteLine(">>> " + command + " caused " + answ);
-            if (leadingChars <= 0) return answ;
+            if (leadingChars <= 0) 
+                return answ;
             answ = answ.Remove(0, Math.Min(leadingChars, answ.Length));
             return answ;
         }
