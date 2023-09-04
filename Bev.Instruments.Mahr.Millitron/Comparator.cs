@@ -26,7 +26,6 @@ namespace Bev.Instruments.Mahr.Millitron
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             AudioUI.Beep();
             Console.Write($"\n     {pointName}:");   // tell user which gauge block (or probing point) should be used
-            //Console.Write($"\n\a     {pointName}:");   // tell user which gauge block (or probing point) should be used
             if (holdTime > 0) // use automatic probe movement
             {
                 LiftProbeFor(holdTime);
@@ -55,7 +54,7 @@ namespace Bev.Instruments.Mahr.Millitron
             DropProbe();
         }
 
-        // poll and waiz for the first valid value 
+        // poll and wait for the first valid value 
         private double GetValidValue()
         {
             string answ;

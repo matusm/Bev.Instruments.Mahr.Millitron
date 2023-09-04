@@ -35,6 +35,14 @@ namespace GBC
 
             using (new InfoOperation("initializing probe mover for comparator"))
             {
+                if(options.AutoMoveProbe)
+                {
+                    probeMover = new ConradProbeMover(settings.ComPortConrad, settings.ChannelConrad);
+                }
+                else
+                {
+                    probeMover = new NullProbeMover();
+                }
                 probeMover = new NullProbeMover(); // here we must chose the correct one
                 //probeMover = new ConradProbeMover(settings.ComPortConrad, settings.ChannelConrad);
                 comparator = new Comparator(millitron, probeMover);
@@ -53,12 +61,13 @@ namespace GBC
             SessionData sessionData = new SessionData();
             sessionData.QuerySessionData();
             preuflingGB = sessionData.QueryTestBlock();
-            normalGB = sessionData.QueryStandardBlock();
+            normalGB = new GaugeBlock();
+            if(options.PerformCenter) normalGB = sessionData.QueryStandardBlock();
 
             #region Center length measurement loop
             CenterDataCollection centerDataCollection = new CenterDataCollection();
             int numOutlierCenter = 0;
-            if (true) // TODO from command line option
+            if (options.PerformCenter)
             {
                 bool outlierDetected;
                 environment.Update();
@@ -103,7 +112,7 @@ namespace GBC
             #region 5-point measurement loop
             VariationDataCollection variationDataCollection = new VariationDataCollection();
             int numOutlier5Point = 0;
-            if (true)
+            if (options.PerformVariation)
             {
                 environment.Update();
                 for (int i = 0; i < settings.Loops5Point; i++)
@@ -121,9 +130,15 @@ namespace GBC
 
                     var variationData = new VariationData(dataPointA.Diff, dataPointB.Diff, dataPointC.Diff, dataPointD.Diff);
                     variationDataCollection.Add(variationData);
+                    environment.Update();
                 }
+                preuflingGB.AddVariationData(variationDataCollection.AverageVariation);
+                preuflingGB.Temperature = environment.Temperature;
             }
             #endregion
+
+            // generic test
+            Console.WriteLine(preuflingGB);
 
 
             millitron.Reset();
@@ -145,7 +160,8 @@ namespace GBC
                     cornerValue = new SimpleDataPoint(m1, p, m2);
                     outlierDetected = cornerValue.IsOutlier(settings.OutlierThreshold5Point);
                     if (outlierDetected)
-                    { 
+                    {
+                        AudioUI.BeepLow();
                         Console.WriteLine("! Wiederholung! ");
                         numOutlier5Point++;
                     }
@@ -159,20 +175,20 @@ namespace GBC
             {
                 ConsoleUI.WriteLine();
                 ConsoleUI.WriteLine("Komparator");
-                ConsoleUI.WriteLine(string.Format("  {0}", millitron.InstrumentID));
-                ConsoleUI.WriteLine(string.Format("  Wartezeit: {0} s", millitron.SettlingTime));
+                ConsoleUI.WriteLine($"  {millitron.InstrumentID}");
+                ConsoleUI.WriteLine($"  Wartezeit: {millitron.SettlingTime} s");
                 //ConsoleUI.WriteLine(string.Format("  Tasterhubzeit: {0} s", (double)liftDelay / 1000.0));
-                ConsoleUI.WriteLine(string.Format("  Faktor A: {0,7:0.0000}", millitron.CorrectionProbeA));
-                ConsoleUI.WriteLine(string.Format("  Faktor B: {0,7:0.0000}", millitron.CorrectionProbeB));
-                ConsoleUI.WriteLine(string.Format("  Auflösungserhöhung: {0}", millitron.ResolutionEnhancement));
-                ConsoleUI.WriteLine(string.Format("  Messwertintegrationszeit: {0:0.0000} s", millitron.IntegrationTime));
-                ConsoleUI.WriteLine("Thermometer");
-                ConsoleUI.WriteLine("  " + environment.TransmitterID);
+                ConsoleUI.WriteLine($"  Faktor A: {millitron.CorrectionProbeA,7:0.0000}");
+                ConsoleUI.WriteLine($"  Faktor B: {millitron.CorrectionProbeB,7:0.0000}");
+                ConsoleUI.WriteLine($"  Auflösungserhöhung: {millitron.ResolutionEnhancement}");
+                ConsoleUI.WriteLine($"  Messwertintegrationszeit: {millitron.IntegrationTime:0.0000} s");
+                ConsoleUI.WriteLine("Thermo-Hygrometer");
+                ConsoleUI.WriteLine($"  {environment.TransmitterID}");
                 ConsoleUI.WriteLine("Kalibrierumfang");
-                //if (ConsoleUI.FlagCenter)
-                //    ConsoleUI.WriteLine(string.Format("  Mittenmassmessung ({0} x)", ConsoleUI.NumRep));
-                //if (ConsoleUI.Flag5Point)
-                //    ConsoleUI.WriteLine(string.Format("  Abweichungsspanne ({0} x)", ConsoleUI.NumRep5));
+                if (options.PerformCenter)
+                    ConsoleUI.WriteLine(string.Format("  Mittenmassmessung ({0} x)", settings.Loops));
+                if (options.PerformVariation)
+                    ConsoleUI.WriteLine(string.Format("  Abweichungsspanne ({0} x)", settings.Loops5Point));
                 ConsoleUI.WriteLine();
             }
 

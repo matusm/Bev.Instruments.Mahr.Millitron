@@ -19,7 +19,7 @@ namespace Bev.Instruments.Mahr.Millitron
         public Millitron1240(string port)
         {
             StartDate = DateTime.UtcNow;
-            serialPort = new SerialPort(DevicePort, 9600, Parity.None, 8, StopBits.One)
+            serialPort = new SerialPort(port, 9600, Parity.None, 8, StopBits.One)
             {
                 Handshake = Handshake.None,
                 ReadTimeout = 3000,
@@ -135,13 +135,16 @@ namespace Bev.Instruments.Mahr.Millitron
             try
             {
                 serialPort.Read(buffer, 0, buffer.Length);
-                return Encoding.UTF8.GetString(buffer);
+                string str = Encoding.UTF8.GetString(buffer);
+                return RemoveNewline(str);
             }
             catch (Exception)
             {
                 return "";
             }
         }
+
+        private string RemoveNewline(string str) => str.Replace("\n", "").Replace("\r", "");
 
         internal double ParseDoubleFrom(string token) => double.TryParse(token, NumberStyles.Any, CultureInfo.InvariantCulture, out double value) ? value : double.NaN;
 

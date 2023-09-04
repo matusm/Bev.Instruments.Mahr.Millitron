@@ -61,7 +61,7 @@ namespace GBC.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        [global::System.Configuration.DefaultSettingValueAttribute("21")]
         public double OutlierThreshold5Point {
             get {
                 return ((double)(this["OutlierThreshold5Point"]));
