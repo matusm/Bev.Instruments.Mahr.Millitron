@@ -14,6 +14,7 @@ namespace GBC
         static void Main(string[] args)
         {
             Settings settings = new Settings();
+            MyCommandLine options = new MyCommandLine(args);
             GaugeBlock preuflingGB;
             GaugeBlock normalGB;
 
@@ -24,7 +25,7 @@ namespace GBC
             #region Instantiate all hardware objects
             Millitron1240 millitron;
             IProbeMover probeMover;
-            Environment environment;
+            Environmental environment;
             Comparator comparator;
 
             using (new InfoOperation("initializing comparator"))
@@ -42,7 +43,7 @@ namespace GBC
             using(new InfoOperation("initializing thermo-hygrometer"))
             {
                 IThermoHygrometer thTransmitter = new VaisalaHmtThermometer(settings.IPEnvironment);
-                environment = new Environment(thTransmitter);
+                environment = new Environmental(thTransmitter);
             }
             #endregion
 

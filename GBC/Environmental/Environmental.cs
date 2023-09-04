@@ -2,13 +2,13 @@
 
 namespace GBC
 {
-    public class Environment
+    public class Environmental
     {
         private readonly IThermoHygrometer transmitter;
         private readonly DataSeriesPod temperature = new DataSeriesPod();
         private readonly DataSeriesPod humidity = new DataSeriesPod();
 
-        public Environment(IThermoHygrometer transmitter)
+        public Environmental(IThermoHygrometer transmitter)
         {
             this.transmitter = transmitter;
         }

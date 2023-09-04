@@ -58,9 +58,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MyCommandLine.cs" />
     <Compile Include="Session\CenterData.cs" />
     <Compile Include="Environmental\DummyThermometer.cs" />
-    <Compile Include="Environmental\Environment.cs" />
+    <Compile Include="Environmental\Environmental.cs" />
     <Compile Include="Environmental\VaisalaHmtThermometer.cs" />
     <Compile Include="GaugeBlock\GaugeBlock.cs" />
     <Compile Include="GaugeBlock\GaugeBlockMaterial.cs" />
