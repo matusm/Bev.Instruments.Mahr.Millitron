@@ -43,8 +43,6 @@ namespace GBC
                 {
                     probeMover = new NullProbeMover();
                 }
-                probeMover = new NullProbeMover(); // here we must chose the correct one
-                //probeMover = new ConradProbeMover(settings.ComPortConrad, settings.ChannelConrad);
                 comparator = new Comparator(millitron, probeMover);
             }
 
