@@ -78,10 +78,16 @@ namespace GBC
                     if (outlierDetected) Console.Write("! Wiederholung ! ");
                     Console.WriteLine($"{i+1}. von {settings.Loops} Messungen");
 
-                    double n1 = comparator.MakeMeasurement("N", settings.LiftDelay);
-                    double p1 = comparator.MakeMeasurement("P", settings.LiftDelay);
-                    double p2 = comparator.MakeMeasurement("P", settings.LiftDelay);
-                    double n2 = comparator.MakeMeasurement("N", settings.LiftDelay);
+                    //double n1 = comparator.MakeMeasurement("N", settings.LiftDelay);
+                    //double p1 = comparator.MakeMeasurement("P", settings.LiftDelay);
+                    //double p2 = comparator.MakeMeasurement("P", settings.LiftDelay);
+                    //double n2 = comparator.MakeMeasurement("N", settings.LiftDelay);
+
+                    double n1 = comparator.MakeMeasurement("N");
+                    double p1 = comparator.MakeMeasurement("P");
+                    double p2 = comparator.MakeMeasurement("P");
+                    double n2 = comparator.MakeMeasurement("N");
+
 
                     dataPoint = new CenterData(n1, p1, p2, n2);
                     outlierDetected = dataPoint.IsOutlier(settings.OutlierThreshold);
