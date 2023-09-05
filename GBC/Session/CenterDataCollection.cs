@@ -13,9 +13,10 @@ namespace GBC
 
         public int NumberOfSamples => dataPoints.Count();
         public CenterData[] Samples => dataPoints.ToArray();
+        public double[] Drift => drift.ToArray();
         public double AverageDiff => spDiff.AverageValue;
         public double RangeDiff => spDiff.Range;
-        public double StandardDeviationDevDiff => spDiff.StandardDeviation;
+        public double StandardDeviationDiff => spDiff.StandardDeviation;
         public double MaxDrift => drift.Last();
 
         public void Add(CenterData dataPoint)

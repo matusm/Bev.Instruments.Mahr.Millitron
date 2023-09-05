@@ -36,7 +36,7 @@ namespace GBC
 
             using (new InfoOperation("initializing probe mover for comparator"))
             {
-                if(options.AutoMoveProbe)
+                if (options.AutoMoveProbe)
                 {
                     probeMover = new ConradProbeMover(settings.ComPortConrad, settings.ChannelConrad);
                 }
@@ -47,7 +47,7 @@ namespace GBC
                 comparator = new Comparator(millitron, probeMover);
             }
 
-            using(new InfoOperation("initializing thermo-hygrometer"))
+            using (new InfoOperation("initializing thermo-hygrometer"))
             {
                 IThermoHygrometer thTransmitter = new VaisalaHmtThermometer(settings.IPEnvironment);
                 environment = new Environmental(thTransmitter);
@@ -60,7 +60,7 @@ namespace GBC
             sessionData.QuerySessionData();
             GaugeBlock preuflingGB = sessionData.QueryTestBlock();
             GaugeBlock normalGB = new GaugeBlock();
-            if(options.PerformCenter) 
+            if (options.PerformCenter)
                 normalGB = sessionData.QueryStandardBlock();
 
             sessionStart = DateTime.UtcNow;
@@ -74,13 +74,13 @@ namespace GBC
                 bool outlierDetected = false;
                 environment.Update();
                 CenterData dataPoint = new CenterData(); // just to suppress compiler errors
-                for (int i = 0; i <settings.Loops; i++)
+                for (int i = 0; i < settings.Loops; i++)
                 {
                     Console.Clear();
                     Console.WriteLine("Bestimmung des Mittenmasses");
                     if (i > 0) Console.WriteLine($"(letzter Wert: {dataPoint.DiffCenter:F0} nm)\n");
                     if (outlierDetected) Console.Write("! Wiederholung ! ");
-                    Console.WriteLine($"{i+1}. von {settings.Loops} Messungen");
+                    Console.WriteLine($"{i + 1}. von {settings.Loops} Messungen");
 
                     double n1 = comparator.MakeMeasurement("N", settings.LiftDelay);
                     double p1 = comparator.MakeMeasurement("P", settings.LiftDelay);
@@ -104,7 +104,7 @@ namespace GBC
                 // it is necessary to set the temperatures in advance
                 normalGB.Temperature = environment.Temperature;
                 preuflingGB.Temperature = environment.Temperature;
-                preuflingGB.CalibrateWith(normalGB, centerDataCollection.AverageDiff/1000);
+                preuflingGB.CalibrateWith(normalGB, centerDataCollection.AverageDiff / 1000);
             }
             #endregion
 
@@ -132,7 +132,7 @@ namespace GBC
                     environment.Update();
                 }
                 preuflingGB.AddVariationData(variationDataCollection.AverageVariation);
-                if(!options.PerformCenter) // only if no center length measurement
+                if (!options.PerformCenter) // only if no center length measurement
                     preuflingGB.Temperature = environment.Temperature;
             }
             #endregion
@@ -145,6 +145,7 @@ namespace GBC
 
             millitron.Reset();
 
+            ConsoleUI.WaitForKey("Zum Beenden eine Taste drücken...");
 
             /******************************************************************************/
             #region Local functions
@@ -237,13 +238,11 @@ namespace GBC
                 sb.AppendLine($"   Kommentar:      {sessionData.Kommentar}");
                 sb.AppendLine($"   Beobachter:     {sessionData.Beobachter}");
                 sb.AppendLine($"   Datum:          {sessionStart.ToString("dd-MM-yyyy HH:mm")}");
-                sb.AppendLine($"   Kalibrierdauer: {(sessionStop-sessionStart).TotalMinutes:F0} min");
+                sb.AppendLine($"   Kalibrierdauer: {(sessionStop - sessionStart).TotalMinutes:F0} min");
                 sb.AppendLine($"   Lufttemperatur: {environment.Temperature:0.00} °C ± {environment.TemperatureScatter:0.00} °C");
                 sb.AppendLine($"   Temp.-Drift:    {environment.TemperatureDrift:+0.00;-0.00} °C");
                 sb.AppendLine($"   Luftfeuchte:    {environment.Humidity:0.} % ± {environment.HumidityScatter:0.} %");
                 sb.AppendLine();
-
-
                 return sb.ToString();
             }
 
@@ -252,8 +251,8 @@ namespace GBC
             string GenerateReportPart1()
             {
                 StringBuilder sb = new StringBuilder();
-                sb.AppendLine( "   -----------------------------------------------------------------------");
-                sb.AppendLine( "   EINGABEWERTE:");
+                sb.AppendLine("   -----------------------------------------------------------------------");
+                sb.AppendLine("   EINGABEWERTE:");
                 sb.AppendLine($"     Pruefling:             {preuflingGB.Designation} ({preuflingGB.Manufacturer})");
                 if (options.PerformCenter) sb.AppendLine($"     Normal:                {normalGB.Designation} ({normalGB.Manufacturer})");
                 sb.AppendLine($"     Nennlänge:             {preuflingGB.NominalLength} mm");
@@ -276,7 +275,15 @@ namespace GBC
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine("   -----------------------------------------------------------------------");
                 sb.AppendLine("   PARAMETER:");
-
+                sb.AppendLine($"     Messzyklen:     {settings.Loops} (Mittenmaß)");
+                sb.AppendLine($"     Messzyklen:     {settings.Loops5Point} (Abweichungsspanne)");
+                sb.AppendLine($"     Wartezeit:      {settings.SettlingTime} s");
+                sb.AppendLine($"     Tasterhubzeit:  {settings.LiftDelay / 1000.0:F1} s");
+                sb.AppendLine($"     Grenzwert 1:    {settings.OutlierThreshold} nm (Mittenmaß)");
+                sb.AppendLine($"     Grenzwert 2:    {settings.OutlierThreshold5Point} nm (Abweichungsspanne)");
+                sb.AppendLine($"     Korrekturfaktor Taster A (oben):  {millitron.CorrectionProbeA:0.0000} * {millitron.ResolutionEnhancement}");
+                sb.AppendLine($"     Korrekturfaktor Taster B (oben):  {millitron.CorrectionProbeB:0.0000} * {millitron.ResolutionEnhancement}");
+                sb.AppendLine($"     Messwertintegrationszeit: {millitron.IntegrationTime:0.0000} s");
                 return sb.ToString();
             }
 
@@ -287,6 +294,33 @@ namespace GBC
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine("   -----------------------------------------------------------------------");
                 sb.AppendLine("   MESSWERTE (alle Angaben in nm):");
+                if (options.PerformCenter)
+                {
+                    sb.AppendLine("     Mittenmaß:");
+                    sb.AppendLine("      #        N          P          P          N      Drift        P-N");
+                    for (int i = 0; i < centerDataCollection.NumberOfSamples; i++)
+                    {
+                        CenterData cd = centerDataCollection.Samples[i];
+                        double drift = centerDataCollection.Drift[i];
+                        sb.AppendLine($"     {i + 1,2}  {cd.N1,7:+0.;-0.}    {cd.P1,7:+0.;-0.}    {cd.P2,7:+0.;-0.}    {cd.N2,7:+0.;-0.}    {drift,7:+0.;-0.}    {cd.DiffCenter,7:+0.;-0.}");
+                    }
+                    sb.AppendLine();
+                    sb.AppendLine($"     Mittel(P-N) = {centerDataCollection.AverageDiff:+0.0;-0.0} nm    sigma = {centerDataCollection.StandardDeviationDiff:0.0} nm    Spanne = {centerDataCollection.RangeDiff:0.0} nm");
+                    if (numOutlierCenter == 1) sb.AppendLine("     1 Wiederholmessung");
+                    if (numOutlierCenter > 1) sb.AppendLine($"     {numOutlierCenter} Wiederholmessungen");
+
+
+                }
+                if (options.PerformVariation)
+                {
+                    if(options.PerformCenter) sb.AppendLine();
+                    sb.AppendLine("     5-Punkt-Messung:");
+
+                    sb.AppendLine("TODO !!!")
+
+                    if (numOutlier5Point == 1) sb.AppendLine("     1 Wiederholmessung");
+                    if (numOutlier5Point > 1) sb.AppendLine($"     {numOutlier5Point} Wiederholmessungen");
+                }
                 return sb.ToString();
             }
 
@@ -297,6 +331,12 @@ namespace GBC
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine("   -----------------------------------------------------------------------");
                 sb.AppendLine("   ERGEBNIS:\n");
+                if (options.PerformCenter) sb.AppendLine($"     Mittenmaßabweichung:  f_c   = {preuflingGB.CenterDeviation:+0.000;-0.000} µm  (Mittenmaß: {preuflingGB.NominalLength + preuflingGB.CenterDeviation / 1000.0:0.000000} mm)");
+                if (options.PerformVariation) sb.AppendLine($"     Abweichungsspanne:    v     = {preuflingGB.V:0.000} µm");
+                if (options.PerformVariation) sb.AppendLine($"     untere Abweichung:    f_u   = {preuflingGB.F_u:0.000} µm");
+                if (options.PerformVariation) sb.AppendLine($"     obere Abweichung:     f_o   = {preuflingGB.F_o:0.000} µm");
+                if (options.PerformVariation && options.PerformCenter) sb.AppendLine($"     maximale Abweichung:  f_max = {preuflingGB.F_max:0.000} µm");
+                if (options.PerformVariation) sb.AppendLine(GbTextGraph(5));
                 return sb.ToString();
             }
 
