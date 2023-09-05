@@ -83,9 +83,9 @@ namespace Bev.Instruments.Mahr.Millitron
         {
             if (answer.Contains('E')) 
                 return true;
-            double x = millitron.ParseDoubleFrom(answer);
-            if(double.IsNaN(x)) 
-                return true;
+            //double x = millitron.ParseDoubleFrom(answer);
+            //if(double.IsNaN(x)) 
+            //    return true;
             return false;
         }
     }
