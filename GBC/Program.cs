@@ -132,16 +132,16 @@ namespace GBC
                     environment.Update();
                 }
                 preuflingGB.AddVariationData(variationDataCollection.AverageVariation);
-                preuflingGB.Temperature = environment.Temperature;
+                if(!options.PerformCenter) // only if no center length measurement
+                    preuflingGB.Temperature = environment.Temperature;
             }
             #endregion
 
             sessionStop = DateTime.UtcNow;
-            Console.Clear();
 
-            // generic test
-            Console.WriteLine(preuflingGB);
-
+            string reportPage = GenerateReport();
+            reportPage.ToConsole();
+            reportPage.ToFile(reportFilename);
 
             millitron.Reset();
 
