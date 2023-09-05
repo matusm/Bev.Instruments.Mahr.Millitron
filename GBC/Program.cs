@@ -15,6 +15,9 @@ namespace GBC
         {
             Settings settings = new Settings();
             MyCommandLine options = new MyCommandLine(args);
+            DateTime sessionStart;
+            DateTime sessionStop;
+            string reportFilename;
 
             Console.Clear();
             ConsoleUI.Welcome();
@@ -60,34 +63,29 @@ namespace GBC
             if(options.PerformCenter) 
                 normalGB = sessionData.QueryStandardBlock();
 
+            sessionStart = DateTime.UtcNow;
+            reportFilename = $"{settings.LogDirectory}GBC_{sessionStart.ToString("yyyyMMdd-HHmm")}.txt";
+
             #region Center length measurement loop
             CenterDataCollection centerDataCollection = new CenterDataCollection();
             int numOutlierCenter = 0;
             if (options.PerformCenter)
             {
-                bool outlierDetected;
+                bool outlierDetected = false;
                 environment.Update();
-                
-                outlierDetected = false;
                 CenterData dataPoint = new CenterData(); // just to suppress compiler errors
                 for (int i = 0; i <settings.Loops; i++)
                 {
                     Console.Clear();
                     Console.WriteLine("Bestimmung des Mittenmasses");
-                    if (i > 0) Console.WriteLine($"(letzter Wert: {dataPoint.DiffCenter} nm)\n");
+                    if (i > 0) Console.WriteLine($"(letzter Wert: {dataPoint.DiffCenter:F0} nm)\n");
                     if (outlierDetected) Console.Write("! Wiederholung ! ");
                     Console.WriteLine($"{i+1}. von {settings.Loops} Messungen");
 
-                    //double n1 = comparator.MakeMeasurement("N", settings.LiftDelay);
-                    //double p1 = comparator.MakeMeasurement("P", settings.LiftDelay);
-                    //double p2 = comparator.MakeMeasurement("P", settings.LiftDelay);
-                    //double n2 = comparator.MakeMeasurement("N", settings.LiftDelay);
-
-                    double n1 = comparator.MakeMeasurement("N");
-                    double p1 = comparator.MakeMeasurement("P");
-                    double p2 = comparator.MakeMeasurement("P");
-                    double n2 = comparator.MakeMeasurement("N");
-
+                    double n1 = comparator.MakeMeasurement("N", settings.LiftDelay);
+                    double p1 = comparator.MakeMeasurement("P", settings.LiftDelay);
+                    double p2 = comparator.MakeMeasurement("P", settings.LiftDelay);
+                    double n2 = comparator.MakeMeasurement("N", settings.LiftDelay);
 
                     dataPoint = new CenterData(n1, p1, p2, n2);
                     outlierDetected = dataPoint.IsOutlier(settings.OutlierThreshold);
@@ -107,7 +105,6 @@ namespace GBC
                 normalGB.Temperature = environment.Temperature;
                 preuflingGB.Temperature = environment.Temperature;
                 preuflingGB.CalibrateWith(normalGB, centerDataCollection.AverageDiff/1000);
-
             }
             #endregion
 
@@ -139,6 +136,9 @@ namespace GBC
             }
             #endregion
 
+            sessionStop = DateTime.UtcNow;
+            Console.Clear();
+
             // generic test
             Console.WriteLine(preuflingGB);
 
@@ -164,7 +164,7 @@ namespace GBC
                     if (outlierDetected)
                     {
                         AudioUI.BeepLow();
-                        Console.WriteLine("! Wiederholung! ");
+                        Console.Write(" !Wiederholung! ");
                         numOutlier5Point++;
                     }
                 } while (outlierDetected);
@@ -208,6 +208,104 @@ namespace GBC
                 return bild;
             }
 
+            /******************************************************************************/
+
+            string GenerateReport()
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append(GenerateReportPart0());
+                sb.Append(GenerateReportPart1());
+                sb.Append(GenerateReportPart2());
+                sb.Append(GenerateReportPart3());
+                sb.Append(GenerateReportPart4());
+                return sb.ToString().Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n");
+            }
+
+            /******************************************************************************/
+
+            string GenerateReportPart0()
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine();
+                sb.AppendLine($" > program {ConsoleUI.Title}, version {ConsoleUI.Version}");
+                sb.AppendLine($" > length instrument: {millitron.InstrumentID}");
+                sb.AppendLine($" > environment: {environment.TransmitterID}");
+                sb.AppendLine($" > filename: {reportFilename}");
+                sb.AppendLine();
+                sb.AppendLine($"   Auftrag:        {sessionData.Auftrag}");
+                sb.AppendLine($"   T-Zahl:         {sessionData.TZahl}");
+                sb.AppendLine($"   Kommentar:      {sessionData.Kommentar}");
+                sb.AppendLine($"   Beobachter:     {sessionData.Beobachter}");
+                sb.AppendLine($"   Datum:          {sessionStart.ToString("dd-MM-yyyy HH:mm")}");
+                sb.AppendLine($"   Kalibrierdauer: {(sessionStop-sessionStart).TotalMinutes:F0} min");
+                sb.AppendLine($"   Lufttemperatur: {environment.Temperature:0.00} °C ± {environment.TemperatureScatter:0.00} °C");
+                sb.AppendLine($"   Temp.-Drift:    {environment.TemperatureDrift:+0.00;-0.00} °C");
+                sb.AppendLine($"   Luftfeuchte:    {environment.Humidity:0.} % ± {environment.HumidityScatter:0.} %");
+                sb.AppendLine();
+
+
+                return sb.ToString();
+            }
+
+            /******************************************************************************/
+
+            string GenerateReportPart1()
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine( "   -----------------------------------------------------------------------");
+                sb.AppendLine( "   EINGABEWERTE:");
+                sb.AppendLine($"     Pruefling:             {preuflingGB.Designation} ({preuflingGB.Manufacturer})");
+                if (options.PerformCenter) sb.AppendLine($"     Normal:                {normalGB.Designation} ({normalGB.Manufacturer})");
+                sb.AppendLine($"     Nennlänge:             {preuflingGB.NominalLength} mm");
+                if (options.PerformCenter) sb.AppendLine($"     Abweichung, Normal:    {normalGB.CenterDeviation:+0.000;-0.000} µm");
+                if (options.PerformCenter) sb.AppendLine($"     Abplattungskorrektur:  {preuflingGB.ElasticCorrection:+0.000;-0.000} µm");
+                sb.AppendLine($"     Material, Prüfling:    {preuflingGB.MaterialBezeichnung}");
+                if (options.PerformCenter) sb.AppendLine($"     Material, Normal:      {normalGB.MaterialBezeichnung}");
+                sb.AppendLine($"     Temperatur, Prüfling:  {preuflingGB.Temperature,6:0.000} °C");
+                if (options.PerformCenter) sb.AppendLine($"     Temperatur, Normal:    {normalGB.Temperature,6:0.000} °C");
+                sb.AppendLine($"     alpha, Prüfling:       {preuflingGB.Material.Alpha,4:0.0} ppm/K");
+                if (options.PerformCenter) sb.AppendLine($"     alpha, Normal:         {normalGB.Material.Alpha,4:0.0} ppm/K");
+                if (options.PerformCenter) sb.AppendLine($"     Temperaturkorrektur:   {preuflingGB.TemperatureCorrection:+0.000;-0.000} µm (errechnet)");
+                return sb.ToString();
+            }
+
+            /******************************************************************************/
+
+            string GenerateReportPart2()
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("   -----------------------------------------------------------------------");
+                sb.AppendLine("   PARAMETER:");
+
+                return sb.ToString();
+            }
+
+            /******************************************************************************/
+
+            string GenerateReportPart3()
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("   -----------------------------------------------------------------------");
+                sb.AppendLine("   MESSWERTE (alle Angaben in nm):");
+                return sb.ToString();
+            }
+
+            /******************************************************************************/
+
+            string GenerateReportPart4()
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("   -----------------------------------------------------------------------");
+                sb.AppendLine("   ERGEBNIS:\n");
+                return sb.ToString();
+            }
+
+            /******************************************************************************/
+
+
+
+
+            /******************************************************************************/
             #endregion
             /******************************************************************************/
 

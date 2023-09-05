@@ -1,22 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GBC.Properties;
 
 namespace GBC
 {
     public class SessionData
     {
-        private readonly Settings settings;
         private readonly MaterialsCollection materials;
-        private bool centerMeasurement = true;
-        private bool fivePointMeasurement = true;
 
         public SessionData()
         {
-            settings = new Settings();
             materials = new MaterialsCollection();
         }
 
@@ -65,7 +56,6 @@ namespace GBC
             GaugeBlockMaterial material = materials.GetMaterial(NMaterialSymbol);
             return new GaugeBlock(NHersteller, NBezeichnung, NNominalLength, material, NDeviation);
         }
-
 
         private bool IsEmpty(string str) => string.IsNullOrWhiteSpace(str);
 

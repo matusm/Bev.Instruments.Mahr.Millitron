@@ -14,9 +14,10 @@ namespace GBC
         }
 
         public double Temperature => temperature.AverageValue;
-        public double Humidity => humidity.AverageValue;
-        public double TemperatureRange => temperature.Range;
+        public double TemperatureScatter => temperature.Range / 2;
         public double TemperatureDrift => temperature.MostRecentValue - temperature.FirstValue;
+        public double Humidity => humidity.AverageValue;
+        public double HumidityScatter => humidity.Range / 2;
         public int SampleSize => (int)temperature.SampleSize;
         public string TransmitterID => transmitter.InstrumentID;
 
