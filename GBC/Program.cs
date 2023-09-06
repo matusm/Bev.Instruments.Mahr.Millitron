@@ -164,6 +164,7 @@ namespace GBC
                     outlierDetected = cornerValue.IsOutlier(settings.OutlierThreshold5Point);
                     if (outlierDetected)
                     {
+                        Thread.Sleep(400);
                         AudioUI.BeepLow();
                         Console.Write(" !Wiederholung! ");
                         numOutlier5Point++;
@@ -308,16 +309,18 @@ namespace GBC
                     sb.AppendLine($"     Mittel(P-N) = {centerDataCollection.AverageDiff:+0.0;-0.0} nm    sigma = {centerDataCollection.StandardDeviationDiff:0.0} nm    Spanne = {centerDataCollection.RangeDiff:0.0} nm");
                     if (numOutlierCenter == 1) sb.AppendLine("     1 Wiederholmessung");
                     if (numOutlierCenter > 1) sb.AppendLine($"     {numOutlierCenter} Wiederholmessungen");
-
-
                 }
                 if (options.PerformVariation)
                 {
                     if(options.PerformCenter) sb.AppendLine();
                     sb.AppendLine("     5-Punkt-Messung:");
-
-                    sb.AppendLine("TODO !!!")
-
+                    sb.AppendLine($"     A-M ={variationDataCollection.AverageA,6:+0.;-0.} nm     sigma ={variationDataCollection.StandardDeviationA,3:0.} nm     Spanne ={variationDataCollection.RangeA,3:0.} nm");
+                    sb.AppendLine($"     B-M ={variationDataCollection.AverageB,6:+0.;-0.} nm     sigma ={variationDataCollection.StandardDeviationB,3:0.} nm     Spanne ={variationDataCollection.RangeB,3:0.} nm");
+                    sb.AppendLine($"     C-M ={variationDataCollection.AverageC,6:+0.;-0.} nm     sigma ={variationDataCollection.StandardDeviationC,3:0.} nm     Spanne ={variationDataCollection.RangeC,3:0.} nm");
+                    sb.AppendLine($"     D-M ={variationDataCollection.AverageD,6:+0.;-0.} nm     sigma ={variationDataCollection.StandardDeviationD,3:0.} nm     Spanne ={variationDataCollection.RangeD,3:0.} nm");
+                    sb.AppendLine($"     v   ={variationDataCollection.AverageV,6:+0.;-0.} nm     sigma ={variationDataCollection.StandardDeviationV,3:0.} nm     Spanne ={variationDataCollection.RangeV,3:0.} nm");
+                    sb.AppendLine($"     f_u ={variationDataCollection.AverageFu,6:+0.;-0.} nm     sigma ={variationDataCollection.StandardDeviationFu,3:0.} nm     Spanne ={variationDataCollection.RangeFu,3:0.} nm");
+                    sb.AppendLine($"     f_o ={variationDataCollection.AverageFo,6:+0.;-0.} nm     sigma ={variationDataCollection.StandardDeviationFo,3:0.} nm     Spanne ={variationDataCollection.RangeFo,3:0.} nm");
                     if (numOutlier5Point == 1) sb.AppendLine("     1 Wiederholmessung");
                     if (numOutlier5Point > 1) sb.AppendLine($"     {numOutlier5Point} Wiederholmessungen");
                 }
@@ -333,9 +336,9 @@ namespace GBC
                 sb.AppendLine("   ERGEBNIS:\n");
                 if (options.PerformCenter) sb.AppendLine($"     Mittenmaßabweichung:  f_c   = {preuflingGB.CenterDeviation:+0.000;-0.000} µm  (Mittenmaß: {preuflingGB.NominalLength + preuflingGB.CenterDeviation / 1000.0:0.000000} mm)");
                 if (options.PerformVariation) sb.AppendLine($"     Abweichungsspanne:    v     = {preuflingGB.V:0.000} µm");
-                if (options.PerformVariation) sb.AppendLine($"     untere Abweichung:    f_u   = {preuflingGB.F_u:0.000} µm");
-                if (options.PerformVariation) sb.AppendLine($"     obere Abweichung:     f_o   = {preuflingGB.F_o:0.000} µm");
-                if (options.PerformVariation && options.PerformCenter) sb.AppendLine($"     maximale Abweichung:  f_max = {preuflingGB.F_max:0.000} µm");
+                if (options.PerformVariation) sb.AppendLine($"     untere Abweichung:    f_u   = {preuflingGB.Fu:0.000} µm");
+                if (options.PerformVariation) sb.AppendLine($"     obere Abweichung:     f_o   = {preuflingGB.Fo:0.000} µm");
+                if (options.PerformVariation && options.PerformCenter) sb.AppendLine($"     maximale Abweichung:  f_max = {preuflingGB.Fmax:0.000} µm");
                 if (options.PerformVariation) sb.AppendLine(GbTextGraph(5));
                 return sb.ToString();
             }
