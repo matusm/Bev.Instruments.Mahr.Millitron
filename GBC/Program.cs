@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using Bev.Instruments.Mahr.Millitron;
@@ -134,7 +132,7 @@ namespace GBC
                     Console.Clear();
                     Console.WriteLine("Bestimmung der Abweichungsspanne (Normal kann entfernt werden)");
                     Console.WriteLine($"{i + 1}. von {settings.Loops5Point} Messungen");
-                    Console.WriteLine(GbTextGraph(5));
+                    Console.WriteLine(GbCornersTextGraph(5));
                     // Antastsequenz: M C M A M B M D M
                     double m = comparator.MakeMeasurement("M", settings.LiftDelay);
                     SimpleDataPoint dataPointC = MeasureCorner("C", m);
@@ -154,7 +152,7 @@ namespace GBC
 
             sessionStop = DateTime.UtcNow;
 
-            string reportPage = GenerateReport();
+            string reportPage = GenerateCalibrationReport();
             reportPage.ToConsole();
             reportPage.ToFile(reportFilename);
 
@@ -162,8 +160,10 @@ namespace GBC
 
             ConsoleUI.WaitForKey("Zum Beenden eine Taste drücken...");
 
-            /******************************************************************************/
+
             #region Local functions
+            /******************************************************************************/
+
             SimpleDataPoint MeasureCorner(string cornerName, double previousCenterReading)
             {
                 bool outlierDetected;
@@ -179,8 +179,8 @@ namespace GBC
                     outlierDetected = cornerValue.IsOutlier(settings.OutlierThreshold5Point);
                     if (outlierDetected)
                     {
+                        AudioUI.BeepHigh();
                         Thread.Sleep(400);
-                        AudioUI.BeepLow();
                         Console.Write(" !Wiederholung! ");
                         numOutlier5Point++;
                     }
@@ -213,7 +213,7 @@ namespace GBC
 
             /******************************************************************************/
 
-            string GbTextGraph(int leadingSpaces)
+            string GbCornersTextGraph(int leadingSpaces)
             {
                 string sSpaces = new string(' ', leadingSpaces);
                 string bild = "\n";
@@ -227,7 +227,7 @@ namespace GBC
 
             /******************************************************************************/
 
-            string GenerateReport()
+            string GenerateCalibrationReport()
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append(GenerateReportPart0());
@@ -355,7 +355,7 @@ namespace GBC
                 if (options.PerformVariation) sb.AppendLine($"     untere Abweichung:    f_u   = {preuflingGB.Fu:0.000} µm");
                 if (options.PerformVariation) sb.AppendLine($"     obere Abweichung:     f_o   = {preuflingGB.Fo:0.000} µm");
                 if (options.PerformVariation && options.PerformCenter) sb.AppendLine($"     maximale Abweichung:  f_max = {preuflingGB.Fmax:0.000} µm");
-                if (options.PerformVariation) sb.AppendLine(GbTextGraph(5));
+                if (options.PerformVariation) sb.AppendLine(GbCornersTextGraph(5));
                 return sb.ToString();
             }
 
