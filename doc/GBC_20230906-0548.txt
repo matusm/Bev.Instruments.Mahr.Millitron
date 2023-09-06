@@ -1,0 +1,58 @@
+
+ > program GBC, version 5.0
+ > length instrument: MAHR GMBH M1240 1.80 @ COM1
+ > environment: Vaisala HMT330 F5040111
+ > filename: c:\temp\GBC_20230906-0548.txt
+
+   Auftrag:        Messung für ersten Programm-Test
+   T-Zahl:         keine (Hoheit)
+   Kommentar:      keine Endmaß-Bewegung, Antastung immer am gleichen Punkt
+   Beobachter:     Michael Matus
+   Datum:          06-09-2023 05:48
+   Kalibrierdauer: 9 min
+   Lufttemperatur: 19.80 °C ± 0.05 °C
+   Temp.-Drift:    +0.09 °C
+   Luftfeuchte:    43 % ± 0 %
+
+   -----------------------------------------------------------------------
+   EINGABEWERTE:
+     Pruefling:             10267 (KOBA)
+     Nennlänge:             80 mm
+     Material, Prüfling:    Keramik (PSZ)
+     Temperatur, Prüfling:  19.798 °C
+     alpha, Prüfling:        9.3 ppm/K
+   -----------------------------------------------------------------------
+   PARAMETER:
+     Messzyklen:     5 (Mittenmaß)
+     Messzyklen:     3 (Abweichungsspanne)
+     Wartezeit:      8 s
+     Tasterhubzeit:  1.0 s
+     Grenzwert 1:    21 nm (Mittenmaß)
+     Grenzwert 2:    21 nm (Abweichungsspanne)
+     Korrekturfaktor Taster A (oben):  0.9998 * 10
+     Korrekturfaktor Taster B (oben):  1.0000 * 10
+     Messwertintegrationszeit: 0.1024 s
+   -----------------------------------------------------------------------
+   MESSWERTE (alle Angaben in nm):
+     5-Punkt-Messung:
+     A-M =    +1 nm     sigma =  2 nm     Spanne =  4 nm
+     B-M =    -1 nm     sigma =  1 nm     Spanne =  2 nm
+     C-M =    +0 nm     sigma =  3 nm     Spanne =  5 nm
+     D-M =    +2 nm     sigma =  2 nm     Spanne =  3 nm
+     v   =    +4 nm     sigma =  1 nm     Spanne =  2 nm
+     f_u =    +2 nm     sigma =  2 nm     Spanne =  4 nm
+     f_o =    +2 nm     sigma =  2 nm     Spanne =  3 nm
+   -----------------------------------------------------------------------
+   ERGEBNIS:
+
+     Abweichungsspanne:    v     = 0.003 µm
+     untere Abweichung:    f_u   = 0.001 µm
+     obere Abweichung:     f_o   = 0.002 µm
+
+     ┌───────────────────┐
+     │ A               B │
+     │         M         │
+     │ C               D │
+     └───────────────────┘
+
+

@@ -229,20 +229,20 @@ namespace GBC
             {
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine();
-                sb.AppendLine($" > program {ConsoleUI.Title}, version {ConsoleUI.Version}");
-                sb.AppendLine($" > length instrument: {millitron.InstrumentID}");
-                sb.AppendLine($" > environment: {environment.TransmitterID}");
-                sb.AppendLine($" > filename: {reportFilename}");
+                sb.AppendLine($" > Program {ConsoleUI.Title}, version {ConsoleUI.FullVersion}");
+                sb.AppendLine($" > Comparator: {millitron.InstrumentID}");
+                sb.AppendLine($" > Environment: {environment.TransmitterID}");
+                sb.AppendLine($" > Filename: {reportFilename}");
                 sb.AppendLine();
                 sb.AppendLine($"   Auftrag:        {sessionData.Auftrag}");
                 sb.AppendLine($"   T-Zahl:         {sessionData.TZahl}");
                 sb.AppendLine($"   Kommentar:      {sessionData.Kommentar}");
                 sb.AppendLine($"   Beobachter:     {sessionData.Beobachter}");
-                sb.AppendLine($"   Datum:          {sessionStart.ToString("dd-MM-yyyy HH:mm")}");
+                sb.AppendLine($"   Datum:          {sessionStart.ToString("dd-MM-yyyy HH:mm")} (UTC)");
                 sb.AppendLine($"   Kalibrierdauer: {(sessionStop - sessionStart).TotalMinutes:F0} min");
                 sb.AppendLine($"   Lufttemperatur: {environment.Temperature:0.00} °C ± {environment.TemperatureScatter:0.00} °C");
                 sb.AppendLine($"   Temp.-Drift:    {environment.TemperatureDrift:+0.00;-0.00} °C");
-                sb.AppendLine($"   Luftfeuchte:    {environment.Humidity:0.} % ± {environment.HumidityScatter:0.} %");
+                sb.AppendLine($"   Luftfeuchte:    {environment.Humidity:0.} %");
                 sb.AppendLine();
                 return sb.ToString();
             }
@@ -258,7 +258,6 @@ namespace GBC
                 if (options.PerformCenter) sb.AppendLine($"     Normal:                {normalGB.Designation} ({normalGB.Manufacturer})");
                 sb.AppendLine($"     Nennlänge:             {preuflingGB.NominalLength} mm");
                 if (options.PerformCenter) sb.AppendLine($"     Abweichung, Normal:    {normalGB.CenterDeviation:+0.000;-0.000} µm");
-                if (options.PerformCenter) sb.AppendLine($"     Abplattungskorrektur:  {preuflingGB.ElasticCorrection:+0.000;-0.000} µm");
                 sb.AppendLine($"     Material, Prüfling:    {preuflingGB.MaterialBezeichnung}");
                 if (options.PerformCenter) sb.AppendLine($"     Material, Normal:      {normalGB.MaterialBezeichnung}");
                 sb.AppendLine($"     Temperatur, Prüfling:  {preuflingGB.Temperature,6:0.000} °C");
@@ -266,6 +265,7 @@ namespace GBC
                 sb.AppendLine($"     alpha, Prüfling:       {preuflingGB.Material.Alpha,4:0.0} ppm/K");
                 if (options.PerformCenter) sb.AppendLine($"     alpha, Normal:         {normalGB.Material.Alpha,4:0.0} ppm/K");
                 if (options.PerformCenter) sb.AppendLine($"     Temperaturkorrektur:   {preuflingGB.TemperatureCorrection:+0.000;-0.000} µm (errechnet)");
+                if (options.PerformCenter) sb.AppendLine($"     Abplattungskorrektur:  {preuflingGB.ElasticCorrection:+0.000;-0.000} µm");
                 return sb.ToString();
             }
 
@@ -318,6 +318,7 @@ namespace GBC
                     sb.AppendLine($"     B-M ={variationDataCollection.AverageB,6:+0.;-0.} nm     sigma ={variationDataCollection.StandardDeviationB,3:0.} nm     Spanne ={variationDataCollection.RangeB,3:0.} nm");
                     sb.AppendLine($"     C-M ={variationDataCollection.AverageC,6:+0.;-0.} nm     sigma ={variationDataCollection.StandardDeviationC,3:0.} nm     Spanne ={variationDataCollection.RangeC,3:0.} nm");
                     sb.AppendLine($"     D-M ={variationDataCollection.AverageD,6:+0.;-0.} nm     sigma ={variationDataCollection.StandardDeviationD,3:0.} nm     Spanne ={variationDataCollection.RangeD,3:0.} nm");
+                    sb.AppendLine("     ---------------------------------------------------");
                     sb.AppendLine($"     v   ={variationDataCollection.AverageV,6:+0.;-0.} nm     sigma ={variationDataCollection.StandardDeviationV,3:0.} nm     Spanne ={variationDataCollection.RangeV,3:0.} nm");
                     sb.AppendLine($"     f_u ={variationDataCollection.AverageFu,6:+0.;-0.} nm     sigma ={variationDataCollection.StandardDeviationFu,3:0.} nm     Spanne ={variationDataCollection.RangeFu,3:0.} nm");
                     sb.AppendLine($"     f_o ={variationDataCollection.AverageFo,6:+0.;-0.} nm     sigma ={variationDataCollection.StandardDeviationFo,3:0.} nm     Spanne ={variationDataCollection.RangeFo,3:0.} nm");
