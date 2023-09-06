@@ -23,18 +23,33 @@ namespace GBC
             ConsoleUI.Welcome();
             ConsoleUI.WriteLine();
 
+            // user just wants to reset the Millitron
+            if(options.ResetMillitron)
+            {
+                using (new InfoOperation("Reset comparator"))
+                {
+                    Millitron1240 device = new Millitron1240(settings.ComPortMillitron);
+                    Thread.Sleep(100);
+                    device.Reset();
+                    Thread.Sleep(2000);
+                    ConsoleUI.WriteLine();
+                }
+                ConsoleUI.WaitForKey("Zum Beenden eine Taste drücken...");
+                return;
+            }
+
             #region Instantiate all hardware objects
             Millitron1240 millitron;
             IProbeMover probeMover;
-            Environmental environment;
+            Environmental environmental;
             Comparator comparator;
 
-            using (new InfoOperation("initializing comparator"))
+            using (new InfoOperation("Initializing comparator"))
             {
                 millitron = new Millitron1240(settings.ComPortMillitron);
             }
 
-            using (new InfoOperation("initializing probe mover for comparator"))
+            using (new InfoOperation("Initializing probe mover for comparator"))
             {
                 if (options.AutoMoveProbe)
                 {
@@ -47,10 +62,10 @@ namespace GBC
                 comparator = new Comparator(millitron, probeMover);
             }
 
-            using (new InfoOperation("initializing thermo-hygrometer"))
+            using (new InfoOperation("Initializing thermo-hygrometer"))
             {
                 IThermoHygrometer thTransmitter = new VaisalaHmtThermometer(settings.IPEnvironment);
-                environment = new Environmental(thTransmitter);
+                environmental = new Environmental(thTransmitter);
             }
             #endregion
 
@@ -72,7 +87,7 @@ namespace GBC
             if (options.PerformCenter)
             {
                 bool outlierDetected = false;
-                environment.Update();
+                environmental.Update();
                 CenterData dataPoint = new CenterData(); // just to suppress compiler errors
                 for (int i = 0; i < settings.Loops; i++)
                 {
@@ -89,7 +104,7 @@ namespace GBC
 
                     dataPoint = new CenterData(n1, p1, p2, n2);
                     outlierDetected = dataPoint.IsOutlier(settings.OutlierThreshold);
-                    environment.Update();
+                    environmental.Update();
 
                     if (outlierDetected)
                     {
@@ -102,8 +117,8 @@ namespace GBC
                     }
                 }
                 // it is necessary to set the temperatures in advance
-                normalGB.Temperature = environment.Temperature;
-                preuflingGB.Temperature = environment.Temperature;
+                normalGB.Temperature = environmental.Temperature;
+                preuflingGB.Temperature = environmental.Temperature;
                 preuflingGB.CalibrateWith(normalGB, centerDataCollection.AverageDiff / 1000);
             }
             #endregion
@@ -113,7 +128,7 @@ namespace GBC
             int numOutlier5Point = 0;
             if (options.PerformVariation)
             {
-                environment.Update();
+                environmental.Update();
                 for (int i = 0; i < settings.Loops5Point; i++)
                 {
                     Console.Clear();
@@ -129,11 +144,11 @@ namespace GBC
 
                     var variationData = new VariationData(dataPointA.Diff, dataPointB.Diff, dataPointC.Diff, dataPointD.Diff);
                     variationDataCollection.Add(variationData);
-                    environment.Update();
+                    environmental.Update();
                 }
                 preuflingGB.AddVariationData(variationDataCollection.AverageVariation);
                 if (!options.PerformCenter) // only if no center length measurement
-                    preuflingGB.Temperature = environment.Temperature;
+                    preuflingGB.Temperature = environmental.Temperature;
             }
             #endregion
 
@@ -187,7 +202,7 @@ namespace GBC
                 ConsoleUI.WriteLine($"  Auflösungserhöhung: {millitron.ResolutionEnhancement}");
                 ConsoleUI.WriteLine($"  Messwertintegrationszeit: {millitron.IntegrationTime:0.0000} s");
                 ConsoleUI.WriteLine("Thermo-Hygrometer");
-                ConsoleUI.WriteLine($"  {environment.TransmitterID}");
+                ConsoleUI.WriteLine($"  {environmental.TransmitterID}");
                 ConsoleUI.WriteLine("Kalibrierumfang");
                 if (options.PerformCenter)
                     ConsoleUI.WriteLine(string.Format("  Mittenmassmessung ({0} x)", settings.Loops));
@@ -231,7 +246,7 @@ namespace GBC
                 sb.AppendLine();
                 sb.AppendLine($" > Program {ConsoleUI.Title}, version {ConsoleUI.FullVersion}");
                 sb.AppendLine($" > Comparator: {millitron.InstrumentID}");
-                sb.AppendLine($" > Environment: {environment.TransmitterID}");
+                sb.AppendLine($" > Environment: {environmental.TransmitterID}");
                 sb.AppendLine($" > Filename: {reportFilename}");
                 sb.AppendLine();
                 sb.AppendLine($"   Auftrag:        {sessionData.Auftrag}");
@@ -240,9 +255,9 @@ namespace GBC
                 sb.AppendLine($"   Beobachter:     {sessionData.Beobachter}");
                 sb.AppendLine($"   Datum:          {sessionStart.ToString("dd-MM-yyyy HH:mm")} (UTC)");
                 sb.AppendLine($"   Kalibrierdauer: {(sessionStop - sessionStart).TotalMinutes:F0} min");
-                sb.AppendLine($"   Lufttemperatur: {environment.Temperature:0.00} °C ± {environment.TemperatureScatter:0.00} °C");
-                sb.AppendLine($"   Temp.-Drift:    {environment.TemperatureDrift:+0.00;-0.00} °C");
-                sb.AppendLine($"   Luftfeuchte:    {environment.Humidity:0.} %");
+                sb.AppendLine($"   Lufttemperatur: {environmental.Temperature:0.00} °C ± {environmental.TemperatureScatter:0.00} °C");
+                sb.AppendLine($"   Temp.-Drift:    {environmental.TemperatureDrift:+0.00;-0.00} °C");
+                sb.AppendLine($"   Luftfeuchte:    {environmental.Humidity:0.} %");
                 sb.AppendLine();
                 return sb.ToString();
             }
