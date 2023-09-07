@@ -9,7 +9,7 @@ namespace GBC
             ParseCommandLine(args);
         }
 
-        public bool ResetMillitron { get; private set } = false;
+        public bool ResetMillitron { get; private set; } = false;
         public bool PerformCenter { get; private set; } = true;
         public bool PerformVariation { get; private set; } = false;
         public bool AutoMoveProbe { get; private set; } = false;
