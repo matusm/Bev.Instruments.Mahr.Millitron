@@ -32,7 +32,7 @@ namespace GBC
                     Thread.Sleep(2000);
                     ConsoleUI.WriteLine();
                 }
-                ConsoleUI.WaitForKey("Zum Beenden eine Taste drücken...");
+                ConsoleUI.WaitForKey("Zum Beenden eine Taste drücken ...");
                 return;
             }
 
@@ -75,6 +75,8 @@ namespace GBC
             GaugeBlock normalGB = new GaugeBlock();
             if (options.PerformCenter)
                 normalGB = sessionData.QueryStandardBlock();
+
+            ConsoleUI.WaitForKey("Zum Start eine Taste drücken ...");
 
             sessionStart = DateTime.UtcNow;
             reportFilename = $"{settings.LogDirectory}GBC_{sessionStart.ToString("yyyyMMdd-HHmm")}.txt";
@@ -158,7 +160,7 @@ namespace GBC
 
             millitron.Reset();
 
-            ConsoleUI.WaitForKey("Zum Beenden eine Taste drücken...");
+            ConsoleUI.WaitForKey("Zum Beenden eine Taste drücken ...");
 
 
             #region Local functions
@@ -360,13 +362,7 @@ namespace GBC
             }
 
             /******************************************************************************/
-
-
-
-
-            /******************************************************************************/
             #endregion
-            /******************************************************************************/
 
         }
     }
