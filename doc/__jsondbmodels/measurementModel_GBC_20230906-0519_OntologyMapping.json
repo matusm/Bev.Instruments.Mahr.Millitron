@@ -1,0 +1,693 @@
+{
+	"softwareID": "BE230SM0001R0002",
+	"clientID": "W003-E2-M-N58",
+	"order": {
+		"orderID": "XXX",
+		"description": "Messung für ersten Programm-Test",
+		"t-nr.": "keine (Hoheit)",
+		"comment": "keine Endmaß-Bewegung, Antastung immer am gleichen Punkt"
+	},
+	"qm": [
+		"A_011203"
+	],
+	"respPersons": [
+		{
+			"personID": "matus",
+			"mainSigner": true
+		},
+		{
+			"personID": "premper",
+			"mainSigner": false
+		}
+	],
+	"measurementDevices": [
+		{
+			"type": "examinee",
+			"mdID": "MD000001"
+		},
+		{
+			"type": "normal",
+			"mdID": "MD000001"
+		},
+		{
+			"type": "environment",
+			"mdID": "MD000002"
+		}
+	],
+	"influenceConditions": [
+		{
+			"icID": "IC000001",
+			"label": "air_temperature_laboratory",
+			"complexReal": {
+				"unit": "_degreecelsius",
+				"value": {
+					"decimalPositions": 2,
+					"float": 19.87,
+					"sign": 1
+				},
+				"deviation": {
+					"decimalPositions": 2,
+					"float": 0.07,
+					"sign": 0
+				}
+			}
+		},
+		{
+			"icID": "IC000002",
+			"label": "temperature_drift",
+			"complexReal": {
+				"unit": "_degreecelsius",
+				"value": {
+					"decimalPositions": 2,
+					"float": 0.12,
+					"sign": -1
+				}
+			}
+		},
+		{
+			"icID": "IC000003",
+			"label": "air_humidity_laboratory",
+			"complexReal": {
+				"unit": "_percentage",
+				"value": {
+					"decimalPositions": 0,
+					"float": 43,
+					"sign": 1
+				},
+				"deviation": {
+					"decimalPositions": 0,
+					"float": 0.0,
+					"sign": 0
+				}
+			}
+		}
+	],
+	"tsID": "TS000001",
+	"tsStart": "1701162396",
+	"tsEnd": "1701164396",
+	"measurementParameters": [
+		{
+			"mpID": "MP000001",
+			"label": "nominal_length",
+			"complexReal": {
+				"unit": "_milli_meter",
+				"value": {
+					"decimalPositions": 0,
+					"float": 80.0,
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mpID": "MP000002",
+			"label": "deviation_normal",
+			"complexReal": {
+				"unit": "_micro_meter",
+				"value": {
+					"decimalPositions": 3,
+					"float": 0.0,
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mpID": "MP000003",
+			"label": "flattening_correction",
+			"complexReal": {
+				"unit": "_micro_meter",
+				"value": {
+					"decimalPositions": 3,
+					"float": 0.0,
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mpID": "MP000004",
+			"label": "material_examinee",
+			"complexString": {
+				"unit": "_none",
+				"value": {
+					"string": "ceramics_psz"
+				}
+			}
+		},
+		{
+			"mpID": "MP000005",
+			"label": "material_normal",
+			"complexString": {
+				"unit": "_none",
+				"value": {
+					"string": "ceramics_psz"
+				}
+			}
+		},
+		{
+			"mpID": "MP000006",
+			"label": "temperature_examinee",
+			"complexReal": {
+				"unit": "_degreecelsius",
+				"value": {
+					"decimalPositions": 3,
+					"float": 19.902,
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mpID": "MP000007",
+			"label": "temperature_normal",
+			"complexReal": {
+				"unit": "_degreecelsius",
+				"value": {
+					"decimalPositions": 3,
+					"float": 19.902,
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mpID": "MP000008",
+			"label": "alpha_examinee",
+			"complexReal": {
+				"unit": "_partspermillion_kelvin_tothe{1}",
+				"value": {
+					"decimalPositions": 1,
+					"float": 9.3,
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mpID": "MP000009",
+			"label": "alpha_normal",
+			"complexReal": {
+				"unit": "_partspermillion_kelvin_tothe{1}",
+				"value": {
+					"decimalPositions": 1,
+					"float": 9.3,
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mpID": "MP00000A",
+			"label": "temperature_correction",
+			"complexReal": {
+				"unit": "_micro_meter",
+				"value": {
+					"decimalPositions": 3,
+					"float": 0.0,
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mpID": "MP00000B",
+			"label": "measurement_cycles_center_dimension",
+			"complexReal": {
+				"unit": "_none",
+				"value": {
+					"decimalPositions": 0,
+					"float": 5.0,
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mpID": "MP00000C",
+			"label": "measurement_cycles_deviation_margin",
+			"complexReal": {
+				"unit": "_none",
+				"value": {
+					"decimalPositions": 0,
+					"float": 3.0,
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mpID": "MP00000D",
+			"label": "measurement_cycle_timeout",
+			"complexReal": {
+				"unit": "_second",
+				"value": {
+					"decimalPositions": 0,
+					"float": 8.0,
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mpID": "MP00000E",
+			"label": "button_stroke_time",
+			"complexReal": {
+				"unit": "_second",
+				"value": {
+					"decimalPositions": 0,
+					"float": 1.0,
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mpID": "MP00000F",
+			"label": "threshold_center_dimension",
+			"complexReal": {
+				"unit": "_nano_meter",
+				"value": {
+					"decimalPositions": 0,
+					"float": 21.0,
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mpID": "MP000010",
+			"label": "threshold_deviation_margin",
+			"complexReal": {
+				"unit": "_nano_meter",
+				"value": {
+					"decimalPositions": 0,
+					"float": 21.0,
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mpID": "MP000011",
+			"label": "correction_factor_button_a",
+			"complexReal": {
+				"unit": "_none",
+				"value": {
+					"decimalPositions": 4,
+					"float": 0.9998,
+					"mulitplicator": "_ten_tothe{1}",
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mpID": "MP000012",
+			"label": "correction_factor_button_b",
+			"complexReal": {
+				"unit": "_none",
+				"value": {
+					"decimalPositions": 4,
+					"float": 1.0,
+					"mulitplicator": "_ten_tothe{1}",
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mpID": "MP000013",
+			"label": "measurement_value_integration_time",
+			"complexReal": {
+				"unit": "_second",
+				"value": {
+					"decimalPositions": 4,
+					"float": 0.1024,
+					"sign": 1
+				}
+			}
+		}
+	],
+	"measurementValues": [
+		{
+			"mvID": "MV000001",
+			"label": "measurement_values_center_dimension",
+			"rows": 5,
+			"columns": 6,
+			"table_labels": [
+				"N",
+				"P",
+				"P",
+				"N",
+				"Drift",
+				"P-N"
+			],
+			"table_comments": "",
+			"values": [
+				[
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 57.0,
+							"sign": 1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 55.0,
+							"sign": 1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 56.0,
+							"sign": 1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 55.0,
+							"sign": 1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 0.0,
+							"sign": 1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 1.0,
+							"sign": -1
+						}
+					}
+				],
+				[
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 57.0,
+							"sign": 1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 56.0,
+							"sign": 1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 56.0,
+							"sign": 1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 55.0,
+							"sign": 1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 0.0,
+							"sign": 1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 1.0,
+							"sign": -1
+						}
+					}
+				]
+			]
+		},
+		{
+			"mvID": "MV000002",
+			"label": "measurement_values_center_dimension_evaluation",
+			"rows": 1,
+			"columns": 3,
+			"table_labels": [
+				"Mittel(P-N)",
+				"Sigma",
+				"Span/Range"
+			],
+			"table_comments": "",
+			"values": [
+				[
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 1,
+							"float": 1.3,
+							"sign": -1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 1,
+							"float": 1.9,
+							"sign": 1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 1,
+							"float": 4.5,
+							"sign": 1
+						}
+					}
+				]
+			]
+		},
+		{
+			"mvID": "MV000003",
+			"label": "five_point_measurement",
+			"rows": 7,
+			"columns": 4,
+			"table_labels": [
+				"Reference",
+				"Reference Length",
+				"Sigma",
+				"Span/Range"
+			],
+			"table_comments": "1 Wiederholmessung",
+			"values": [
+				[
+					{
+						"unit": "_none",
+						"string_value": "A-M"
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 1.0,
+							"sign": 1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 2.0,
+							"sign": 1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 3.0,
+							"sign": 1
+						}
+					}
+				],
+				[
+					{
+						"unit": "_none",
+						"string_value": "B-M"
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 0.0,
+							"sign": 1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 1.0,
+							"sign": 1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 2.0,
+							"sign": 1
+						}
+					}
+				],
+				[
+					{
+						"unit": "_none",
+						"string_value": "B-M"
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 0.0,
+							"sign": 1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 1.0,
+							"sign": 1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 2.0,
+							"sign": 1
+						}
+					}
+				],
+				[
+					{
+						"unit": "_none",
+						"string_value": "f_o"
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 4.0,
+							"sign": 1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 6.0,
+							"sign": 1
+						}
+					},
+					{
+						"unit": "_nano_meter",
+						"value": {
+							"decimalPositions": 0,
+							"float": 10.0,
+							"sign": 1
+						}
+					}
+				]
+			]
+		}
+	],
+	"measurementResults": [
+		{
+			"mrID": "MR000001",
+			"label": "center_to_center_deviation",
+			"abbreviation": "f_c",
+			"complexReal": {
+				"unit": "_micro_meter",
+				"value": {
+					"decimalPositions": 3,
+					"float": 0.001,
+					"sign": -1
+				}
+			}
+		},
+		{
+			"mrID": "MR000002",
+			"label": "deviation_margin",
+			"abbreviation": "v",
+			"complexReal": {
+				"unit": "_micro_meter",
+				"value": {
+					"decimalPositions": 3,
+					"float": 0.004,
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mrID": "MR000003",
+			"label": "lower_deviation",
+			"abbreviation": "f_u",
+			"complexReal": {
+				"unit": "_micro_meter",
+				"value": {
+					"decimalPositions": 3,
+					"float": 0.000,
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mrID": "MR000004",
+			"label": "upper_deviation",
+			"abbreviation": "f_o",
+			"complexReal": {
+				"unit": "_micro_meter",
+				"value": {
+					"decimalPositions": 3,
+					"float": 0.004,
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mrID": "MR000005",
+			"label": "max_deviation",
+			"abbreviation": "f_max",
+			"complexReal": {
+				"unit": "_micro_meter",
+				"value": {
+					"decimalPositions": 3,
+					"float": 0.002,
+					"sign": 1
+				}
+			}
+		},
+		{
+			"mrID": "MR000006",
+			"label": "center_to_center_dimension",
+			"abbreviation": "_none",
+			"complexReal": {
+				"unit": "_milli_meter",
+				"value": {
+					"decimalPositions": 6,
+					"float": 79.999999,
+					"sign": 1
+				}
+			}
+		}
+	],
+	"error": [
+		""
+	]
+}

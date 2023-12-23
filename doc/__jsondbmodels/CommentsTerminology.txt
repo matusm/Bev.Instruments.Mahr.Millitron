@@ -1,0 +1,62 @@
+Kommentare zu terminology.config
+
+[MD000001]
+im Beispiel ist die Nummer des Normalendmaßes genannt
+Das soll im Kalibrierschein unter verwendete Messmittel aufscheinen
+gemeint ist hier wahrscheinlich der Endmaßkomparator?
+
+
+[InfluenceConditions]
+Wenn mehrere Endmaße in einem Kalibrierschein zusammengefasst werden - wer soll die (triviale) Auswertung machen?
+Muss bei mehrerern Prüflingen konsolidiert werden.
+
+
+[MP000001]
+decimalPositions = 0
+sollte variabel sein. Wie kann ich das codieren?
+1.00
+1.04
+1.10
+1.0005
+1.000
+
+
+[MP000002]
+[MP000003]
+[MP000005]
+[MP000006]
+[MP000007]
+[MP000009]
+[MP00000A]
+[MP00000B]
+[MP00000C]
+[MP00000D]
+[MP00000E]
+[MP00000F]
+[MP000010]
+[MP000011]
+[MP000012]
+[MP000013]
+Soll _nicht_ im Kalibrierschein erscheinen
+
+
+[MP000004]
+[MP000008]
+Muss bei mehrerern Prüflingen konsolidiert werden.
+
+
+[MeasurementValues]
+1 = MV000001
+2 = MV000002
+3 = MV000003
+Braucht man für Kalibrierschein _nicht_
+
+
+[MeasurementResults]
+1 = MR000001
+2 = MR000002
+3 = MR000003
+4 = MR000004
+5 = MR000005
+6 = MR000006
+Kann so bleiben, für Kalibrierschein braucht man aber nur 1, 3, 4

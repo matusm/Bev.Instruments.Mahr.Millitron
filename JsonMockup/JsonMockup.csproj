@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{45B2DA41-3847-4E28-8F87-8898AF1689FA}</ProjectGuid>
+    <ProjectGuid>{BBA4462E-DD6E-4EE8-922B-8AD6B823EC31}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>GBC</RootNamespace>
-    <AssemblyName>GBC</AssemblyName>
+    <RootNamespace>JsonMockup</RootNamespace>
+    <AssemblyName>JsonMockup</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -25,7 +25,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>none</DebugType>
+    <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -33,21 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="At.Matus.DataSeriesPod">
-      <HintPath>..\..\DataSeriesPod\bin\Release\At.Matus.DataSeriesPod.dll</HintPath>
-    </Reference>
-    <Reference Include="At.Matus.StatisticPod">
-      <HintPath>..\..\At.Matus.StatisticPod\bin\Release\At.Matus.StatisticPod.dll</HintPath>
-    </Reference>
-    <Reference Include="Bev.Instruments.Mahr.Millitron">
-      <HintPath>..\Bev.Instruments.Mahr.Millitron\bin\Release\Bev.Instruments.Mahr.Millitron.dll</HintPath>
-    </Reference>
-    <Reference Include="Bev.UI">
-      <HintPath>..\..\Bev.UI.ConsoleUI\Bev.UI\bin\Release\Bev.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="BevTransmitter">
-      <HintPath>..\..\BevTransmitter\BevTransmitter\bin\Release\BevTransmitter.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -56,7 +41,6 @@
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
@@ -87,36 +71,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyCommandLine.cs" />
-    <Compile Include="MyStringExtensions.cs" />
-    <Compile Include="Session\CenterData.cs" />
-    <Compile Include="Environmental\DummyThermometer.cs" />
-    <Compile Include="Environmental\Environmental.cs" />
-    <Compile Include="Environmental\VaisalaHmtThermometer.cs" />
-    <Compile Include="GaugeBlock\GaugeBlock.cs" />
-    <Compile Include="GaugeBlock\GaugeBlockMaterial.cs" />
-    <Compile Include="Environmental\IThermoHygrometer.cs" />
-    <Compile Include="GaugeBlock\MaterialsCollection.cs" />
+    <Compile Include="MeasurementParameterPoco.cs" />
+    <Compile Include="OrderPoco.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Include="Session\CenterDataCollection.cs" />
-    <Compile Include="Session\SessionData.cs" />
-    <Compile Include="Session\VariationData.cs" />
-    <Compile Include="Session\SimpleDataPoint.cs" />
-    <Compile Include="Session\VariationDataCollection.cs" />
+    <Compile Include="RootPoco.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

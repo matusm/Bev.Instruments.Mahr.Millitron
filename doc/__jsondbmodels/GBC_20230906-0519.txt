@@ -1,0 +1,78 @@
+
+ > program GBC, version 5.0
+ > length instrument: MAHR GMBH M1240 1.80 @ COM1
+ > environment: Vaisala HMT330 F5040111
+ > filename: c:\temp\GBC_20230906-0519.txt
+
+   Auftrag:        Messung für ersten Programm-Test
+   T-Zahl:         keine (Hoheit)
+   Kommentar:      keine Endmaß-Bewegung, Antastung immer am gleichen Punkt
+   Beobachter:     Michael Matus
+   Datum:          06-09-2023 05:19
+   Kalibrierdauer: 15 min
+   Lufttemperatur: 19.87 °C ± 0.07 °C
+   Temp.-Drift:    -0.12 °C
+   Luftfeuchte:    43 % ± 0 %
+
+   -----------------------------------------------------------------------
+   EINGABEWERTE:
+     Pruefling:             10267 (KOBA)
+     Normal:                10267 (KOBA)
+     Nennlänge:             80 mm
+     Abweichung, Normal:    +0.000 µm
+     Abplattungskorrektur:  +0.000 µm
+     Material, Prüfling:    Keramik (PSZ)
+     Material, Normal:      Keramik (PSZ)
+     Temperatur, Prüfling:  19.902 °C
+     Temperatur, Normal:    19.902 °C
+     alpha, Prüfling:        9.3 ppm/K
+     alpha, Normal:          9.3 ppm/K
+     Temperaturkorrektur:   +0.000 µm (errechnet)
+   -----------------------------------------------------------------------
+   PARAMETER:
+     Messzyklen:     5 (Mittenmaß)
+     Messzyklen:     3 (Abweichungsspanne)
+     Wartezeit:      8 s
+     Tasterhubzeit:  1.0 s
+     Grenzwert 1:    21 nm (Mittenmaß)
+     Grenzwert 2:    21 nm (Abweichungsspanne)
+     Korrekturfaktor Taster A (oben):  0.9998 * 10
+     Korrekturfaktor Taster B (oben):  1.0000 * 10
+     Messwertintegrationszeit: 0.1024 s
+   -----------------------------------------------------------------------
+   MESSWERTE (alle Angaben in nm):
+     Mittenmaß:
+      #        N          P          P          N      Drift        P-N
+      1      +57        +55        +56        +55         +0         -1
+      2      +56        +47        +42        +40         -8         -4
+      3      +40        +37        +34        +32        -20         -1
+      4      +26        +23        +19        +14        -36         +1
+      5      +12         +6         +2         +2        -49         -3
+
+     Mittel(P-N) = -1.3 nm    sigma = 1.9 nm    Spanne = 4.5 nm
+
+     5-Punkt-Messung:
+     A-M =    +1 nm     sigma =  2 nm     Spanne =  3 nm
+     B-M =    +0 nm     sigma =  1 nm     Spanne =  2 nm
+     C-M =    +4 nm     sigma =  6 nm     Spanne = 11 nm
+     D-M =    +0 nm     sigma =  1 nm     Spanne =  2 nm
+     v   =    +5 nm     sigma =  6 nm     Spanne = 10 nm
+     f_u =    +1 nm     sigma =  0 nm     Spanne =  1 nm
+     f_o =    +4 nm     sigma =  6 nm     Spanne = 10 nm
+     1 Wiederholmessung
+   -----------------------------------------------------------------------
+   ERGEBNIS:
+
+     Mittenmaßabweichung:  f_c   = -0.001 µm  (Mittenmaß: 79.999999 mm)
+     Abweichungsspanne:    v     = 0.004 µm
+     untere Abweichung:    f_u   = 0.000 µm
+     obere Abweichung:     f_o   = 0.004 µm
+     maximale Abweichung:  f_max = 0.002 µm
+
+     ┌───────────────────┐
+     │ A               B │
+     │         M         │
+     │ C               D │
+     └───────────────────┘
+
+

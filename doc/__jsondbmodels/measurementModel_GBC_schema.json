@@ -1,0 +1,525 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MeasurementModel",
+  "description": "Relevant data of measurements",
+  "type": "object",
+  "properties":{
+	"softwareID":{
+		"description": "",
+		"type": "string"
+	},
+	"clientID":{
+		"description": "",
+		"type": "string"
+	},
+	"order":{
+		"description": "",
+		"type": "object",
+		 "properties":{
+			"orderID":{
+				"description": "",
+				"type": "string"
+			},
+			"description":{
+				"description": "",
+				"type": "string"
+			},
+			"t-nr.":{
+				"description": "",
+				"type": "string"
+			},
+			"comment":{
+				"description": "",
+				"type": "string"
+			}
+		 },
+		 "required": [ "orderID", "description", "t-nr.", "comment" ]
+	},
+	"qm": {
+		"description": "",
+		"type": "array",
+		"items":{
+			"type":"string"
+		},
+		"minItems": 1,
+		"uniqueItems": true
+	},
+	"respPersons":{
+		"description": "",
+		"type": "array",
+		"items":{
+			"type": "object",
+			"properties":{
+				"personID": {
+					"description": "",
+					"type": "string"
+				},
+				"mainSigner": {
+					"description": "",
+					"type": "boolean"
+				}
+			},
+			"required": [ "personID", "mainSigner" ]
+		},
+		"minItems": 1,
+		"uniqueItems": true
+	},
+	"measurementDevices":{
+		"description": "",
+		"type": "array",
+		"items":{
+			"type": "object",
+			"properties":{
+				"type": {
+					"description": "",
+					"type": "string"
+				},
+				"mdID": {
+					"description": "",
+					"type": "string"
+				}
+			},
+			"required": [ "type", "mdID" ]
+		},
+		"minItems": 1,
+		"uniqueItems": true
+	},
+	"influenceConditions":{
+		"description": "",
+		"type": "array",
+		"items":{
+			"type": "object",
+			"properties":{
+				"icID": {
+					"description": "",
+					"type": "string"
+				},
+				"label": {
+					"description": "",
+					"type": "string"
+				},
+				"abbreviation": {
+					"description": "",
+					"type": "string"
+				},
+				"complexReal": {
+					"description": "",
+					"type": "object",
+					"properties":{
+						"unit": {
+							"description": "",
+							"type": "string"
+						},
+						"value": {
+							"description": "",
+							"type": "object",
+							"properties":{
+								"decimalPositions": {
+									"description": "",
+									"type": "integer",
+									"minimum": 0
+								},
+								"mulitplicator": {
+									"description": "",
+									"type": "string"
+								},
+								"float": {
+									"description": "",
+									"type": "number"
+								},
+								"sign": {
+									"description": "",
+									"type": "integer",
+									"minimum": -1,
+									"maximum": 1
+								}
+							},
+							"required": [ "float", "sign" ]
+						},
+						"deviation": {
+							"description": "",
+							"type": "object",
+							"properties":{
+								"decimalPositions": {
+									"description": "",
+									"type": "integer",
+									"minimum": 0
+								},
+								"mulitplicator": {
+									"description": "",
+									"type": "string"
+								},
+								"float": {
+									"description": "",
+									"type": "number"
+								},
+								"sign": {
+									"description": "",
+									"type": "integer",
+									"minimum": -1,
+									"maximum": 1
+								}
+							},
+							"required": [ "float", "sign" ]
+						}
+					},
+					"required": [ "unit", "value" ]
+				},
+				"complexString": {
+					"description": "",
+					"type": "object",
+					"properties":{
+						"unit": {
+							"description": "",
+							"type": "string"
+						},
+						"value": {
+							"description": "",
+							"type": "object",
+							"properties":{
+								"string": {
+									"description": "",
+									"type": "string"
+								}
+							},
+							"required": [ "string" ]
+						}
+					},
+					"required": [ "unit", "value" ]
+				}
+			},
+			"allOf": [{ "required": ["icID", "label"] }, { "oneOf": [{ "required": ["complexReal"]}, { "required": ["complexString"]}] }]
+		},
+		"minItems": 1,
+		"uniqueItems": true
+	},
+	"tsID":{
+		"description": "",
+		"type": "string"
+	},
+	"tsStart":{
+		"description": "",
+		"type": "string"
+	},
+	"tsEnd":{
+		"description": "",
+		"type": "string"
+	},
+	"measurementParameters":{
+		"description": "",
+		"type": "array",
+		"items":{
+			"type": "object",
+			"properties":{
+				"mpID": {
+					"description": "",
+					"type": "string"
+				},
+				"label": {
+					"description": "",
+					"type": "string"
+				},
+				"abbreviation": {
+					"description": "",
+					"type": "string"
+				},
+				"complexReal": {
+					"description": "",
+					"type": "object",
+					"properties":{
+						"unit": {
+							"description": "",
+							"type": "string"
+						},
+						"value": {
+							"description": "",
+							"type": "object",
+							"properties":{
+								"decimalPositions": {
+									"description": "",
+									"type": "integer",
+									"minimum": 0
+								},
+								"mulitplicator": {
+									"description": "",
+									"type": "string"
+								},
+								"float": {
+									"description": "",
+									"type": "number"
+								},
+								"sign": {
+									"description": "",
+									"type": "integer",
+									"minimum": -1,
+									"maximum": 1
+								}
+							},
+							"required": [ "float", "sign" ]
+						},
+						"deviation": {
+							"description": "",
+							"type": "object",
+							"properties":{
+								"decimalPositions": {
+									"description": "",
+									"type": "integer",
+									"minimum": 0
+								},
+								"mulitplicator": {
+									"description": "",
+									"type": "string"
+								},
+								"float": {
+									"description": "",
+									"type": "number"
+								},
+								"sign": {
+									"description": "",
+									"type": "integer",
+									"minimum": -1,
+									"maximum": 1
+								}
+							},
+							"required": [ "float", "sign" ]
+						}
+					},
+					"required": [ "unit", "value" ]
+				},
+				"complexString": {
+					"description": "",
+					"type": "object",
+					"properties":{
+						"unit": {
+							"description": "",
+							"type": "string"
+						},
+						"value": {
+							"description": "",
+							"type": "object",
+							"properties":{
+								"string": {
+									"description": "",
+									"type": "string"
+								}
+							},
+							"required": [ "string" ]
+						}
+					},
+					"required": [ "unit", "value" ]
+				}
+			},
+			"allOf": [{ "required": ["mpID", "label"] }, { "oneOf": [{ "required": ["complexReal"]}, { "required": ["complexString"]}] }]
+		},
+		"minItems": 1,
+		"uniqueItems": true
+	},
+	"measurementValues":{
+		"description": "",
+		"type": "array",
+		"items":{
+			"type": "object",
+			"properties":{
+				"mvID": {
+					"description": "",
+					"type": "string"
+				},
+				"label": {
+					"description": "",
+					"type": "string"
+				},
+				"rows": {
+					"description": "",
+					"type": "integer",
+					"minimum": 1
+				},
+				"colums": {
+					"description": "",
+					"type": "integer",
+					"minimum": 1
+				},
+				"table_labels":{
+					"description": "",
+					"type": "array",
+					"items": {
+						"type":"string"
+					},
+					"minItems": 1
+				},
+				"table_comments": {
+					"description": "",
+					"type": "string"
+				},
+				"values": {
+					"description": "",
+					"type": "array",
+					"items":{
+						"description": "",
+						"type": "array",
+						"items":{
+							"description": "",
+							"type": "object",
+							"properties":{
+								"string_value": {
+									"description": "",
+									"type": "string"
+								},
+								"value": {
+									"description": "",
+									"type": "object",
+									"properties":{
+										"decimalPositions": {
+											"description": "",
+											"type": "integer",
+											"minimum": 0
+										},
+										"mulitplicator": {
+											"description": "",
+											"type": "string"
+										},
+										"float": {
+											"description": "",
+											"type": "number"
+										},
+										"sign": {
+											"description": "",
+											"type": "integer",
+											"minimum": -1,
+											"maximum": 1
+										}
+									},
+									"required": [ "float", "sign" ]
+								}
+							},
+							"allOf": [{ "required": [ "unit" ] }, { "oneOf": [{ "required": ["value"]}, { "required": ["string_value"]}] }]
+						}
+					},
+					"minItems": 1
+				}
+			},
+			"required": [ "mvID", "label", "rows", "columns", "table_labels", "table_comments", "values" ]
+		},
+		"minItems": 1,
+		"uniqueItems": true
+	},
+	"measurementResults":{
+		"description": "",
+		"type": "array",
+		"items":{
+			"type": "object",
+			"properties":{
+				"mrID": {
+					"description": "",
+					"type": "string"
+				},
+				"label": {
+					"description": "",
+					"type": "string"
+				},
+				"abbreviation": {
+					"description": "",
+					"type": "string"
+				},
+				"complexReal": {
+					"description": "",
+					"type": "object",
+					"properties":{
+						"unit": {
+							"description": "",
+							"type": "string"
+						},
+						"value": {
+							"description": "",
+							"type": "object",
+							"properties":{
+								"decimalPositions": {
+									"description": "",
+									"type": "integer",
+									"minimum": 0
+								},
+								"mulitplicator": {
+									"description": "",
+									"type": "string"
+								},
+								"float": {
+									"description": "",
+									"type": "number"
+								},
+								"sign": {
+									"description": "",
+									"type": "integer",
+									"minimum": -1,
+									"maximum": 1
+								}
+							},
+							"required": [ "float", "sign" ]
+						},
+						"deviation": {
+							"description": "",
+							"type": "object",
+							"properties":{
+								"decimalPositions": {
+									"description": "",
+									"type": "integer",
+									"minimum": 0
+								},
+								"mulitplicator": {
+									"description": "",
+									"type": "string"
+								},
+								"float": {
+									"description": "",
+									"type": "number"
+								},
+								"sign": {
+									"description": "",
+									"type": "integer",
+									"minimum": -1,
+									"maximum": 1
+								}
+							},
+							"required": [ "float", "sign" ]
+						}
+					},
+					"required": [ "unit", "value" ]
+				},
+				"complexString": {
+					"description": "",
+					"type": "object",
+					"properties":{
+						"unit": {
+							"description": "",
+							"type": "string"
+						},
+						"value": {
+							"description": "",
+							"type": "object",
+							"properties":{
+								"string": {
+									"description": "",
+									"type": "string"
+								}
+							},
+							"required": [ "string" ]
+						}
+					},
+					"required": [ "unit", "value" ]
+				}
+			},
+			"allOf": [{ "required": ["mrID", "label"] }, { "oneOf": [{ "required": ["complexReal"]}, { "required": ["complexString"]}] }]
+		},
+		"minItems": 1,
+		"uniqueItems": true
+	},
+	"error":{
+		"description": "",
+		"type": "array",
+		"items":{
+			"type":"string"
+		},
+		"minItems": 0,
+		"uniqueItems": true
+	}	
+  },
+  "required": [ "softwareID", "clientID", "order", "qm", "respPersons", "measurementDevices", "influenceConditions", "tsID", "tsStart", "tsEnd", "measurementParameters", "measurementValues", "measurementResults", "error" ]
+}

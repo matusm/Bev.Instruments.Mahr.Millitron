@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bev.Instruments.Mahr.Millit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GBC", "GBC\GBC.csproj", "{45B2DA41-3847-4E28-8F87-8898AF1689FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonMockup", "JsonMockup\JsonMockup.csproj", "{BBA4462E-DD6E-4EE8-922B-8AD6B823EC31}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{45B2DA41-3847-4E28-8F87-8898AF1689FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45B2DA41-3847-4E28-8F87-8898AF1689FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45B2DA41-3847-4E28-8F87-8898AF1689FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBA4462E-DD6E-4EE8-922B-8AD6B823EC31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBA4462E-DD6E-4EE8-922B-8AD6B823EC31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBA4462E-DD6E-4EE8-922B-8AD6B823EC31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBA4462E-DD6E-4EE8-922B-8AD6B823EC31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
