@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="MeasurementParameterPoco.cs" />
     <Compile Include="OrderPoco.cs" />
+    <Compile Include="PersonPoco.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RootPoco.cs" />

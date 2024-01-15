@@ -11,11 +11,22 @@ namespace JsonMockup
     {
         static void Main(string[] args)
         {
+            PersonPoco pers1 = new PersonPoco
+            {
+                PersonID = "matusm",
+                MainSigner = true
+            };
+
+            PersonPoco pers2 = new PersonPoco
+            {
+                PersonID = "zelenkaz",
+                MainSigner = false
+            };
 
             OrderPoco order = new OrderPoco
             {
                 OrderID = "XXX",
-                T_nr = "T23-9999",
+                T_nr = "T01-9999",
                 Description = "Messung für ersten Programm-Test",
                 Comment = "keine Endmaß-Bewegung, Antastung immer am gleichen Punkt"
             };
@@ -25,7 +36,9 @@ namespace JsonMockup
                 SoftwareID = "BE230SM0001R0002",
                 ClientID = "W003-E2-M-N58",
                 Order = order,
-                Qm = new string[] { "A_001203", "A_011501" }
+                Qm = new string[] { "A_011203" },
+                RespPersons = new PersonPoco[] { pers1, pers2 },
+                Error = new string[] { "" }
             };
 
 
