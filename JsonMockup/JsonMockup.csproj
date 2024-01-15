@@ -71,7 +71,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MeasurementDevicePoco.cs" />
     <Compile Include="MeasurementParameterPoco.cs" />
+    <Compile Include="MeasurementResultPoco.cs" />
     <Compile Include="OrderPoco.cs" />
     <Compile Include="PersonPoco.cs" />
     <Compile Include="Program.cs" />

@@ -7,14 +7,14 @@
         public OrderPoco Order { get; set; }
         public string[] Qm { get; set; }
         public PersonPoco[] RespPersons { get; set; }
-        // measurementDevices
+        public MeasurementDevicePoco[] MeasurementDevices { get; set;}
         // influenceConditions
         public string TsID { get; set; }
         public int TsStart { get; set; }
         public int TsEnd { get; set; }
         // measurementParameters
         // measurementValues
-        // measurementResults
+        public MeasurementResultPoco[] MeasurementResults { get; set; }
         public string[] Error { get; set; }
     }
 }
