@@ -10,8 +10,8 @@
         public MeasurementDevicePoco[] MeasurementDevices { get; set;}
         // influenceConditions
         public string TsID { get; set; }
-        public int TsStart { get; set; }
-        public int TsEnd { get; set; }
+        public long TsStart { get; set; }
+        public long TsEnd { get; set; }
         // measurementParameters
         // measurementValues
         public MeasurementResultPoco[] MeasurementResults { get; set; }

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Text.Json;
 
 namespace JsonMockup
@@ -11,6 +8,10 @@ namespace JsonMockup
     {
         static void Main(string[] args)
         {
+            DateTime startTime = DateTime.UtcNow;
+            Thread.Sleep(3141);
+            DateTime endTime = DateTime.UtcNow;
+
             PersonPoco pers1 = new PersonPoco
             {
                 PersonID = "matusm",
@@ -32,12 +33,11 @@ namespace JsonMockup
                 Type = "standard",
                 MdID = "MD000002"
             };
-            MeasurementDevicePoco environmet = new MeasurementDevicePoco
+            MeasurementDevicePoco environment = new MeasurementDevicePoco
             {
                 Type = "environment",
                 MdID = "MD000003"
             };
-
 
             MeasurementResultPoco nom = new MeasurementResultPoco
             {
@@ -119,12 +119,13 @@ namespace JsonMockup
                 Order = order,
                 Qm = new string[] { "A_011203" },
                 RespPersons = new PersonPoco[] { pers1, pers2 },
-                MeasurementDevices = new MeasurementDevicePoco[] { pruefling, normal, environmet },
+                MeasurementDevices = new MeasurementDevicePoco[] { pruefling, normal, environment },
+                TsID = "TS000001",
+                TsStart = new DateTimeOffset(startTime).ToUnixTimeMilliseconds(),
+                TsEnd = new DateTimeOffset(endTime).ToUnixTimeMilliseconds(),
                 MeasurementResults = new MeasurementResultPoco[] { nom, f_c, length, v },
                 Error = new string[] { "" }
             };
-
-
 
             #region Output of the root POCO
             JsonSerializerOptions jOptions = new JsonSerializerOptions 
