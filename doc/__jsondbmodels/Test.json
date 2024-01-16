@@ -1,0 +1,97 @@
+{
+  "SoftwareID": "BE230SM0001R0002",
+  "ClientID": "W003-E2-M-N58",
+  "Order": {
+    "OrderID": "XXX",
+    "Description": "Messung f\u00FCr ersten Programm-Test",
+    "T_nr": "T01-9999",
+    "Comment": "keine Endma\u00DF-Bewegung, Antastung immer am gleichen Punkt"
+  },
+  "Qm": [
+    "A_011203"
+  ],
+  "RespPersons": [
+    {
+      "PersonID": "matusm",
+      "MainSigner": true
+    },
+    {
+      "PersonID": "zelenkaz",
+      "MainSigner": false
+    }
+  ],
+  "MeasurementDevices": [
+    {
+      "Type": "examinee",
+      "MdID": "MD000001"
+    },
+    {
+      "Type": "standard",
+      "MdID": "MD000002"
+    },
+    {
+      "Type": "environment",
+      "MdID": "MD000003"
+    }
+  ],
+  "TsID": "",
+  "TsStart": 1705404916126,
+  "TsEnd": 1705404919279,
+  "MeasurementResults": [
+    {
+      "MrID": "MR000001",
+      "Label": "Nennl\u00E4nge",
+      "Abbreviation": "l_n",
+      "ComplexReal": {
+        "Unit": "_milli_meter",
+        "Value": {
+          "DecimalPositions": 0,
+          "Float": 25,
+          "Sign": 1
+        }
+      }
+    },
+    {
+      "MrID": "MR000002",
+      "Label": "Mittenma\u00DFabweichung",
+      "Abbreviation": "f_c",
+      "ComplexReal": {
+        "Unit": "_micro_meter",
+        "Value": {
+          "DecimalPositions": 3,
+          "Float": -0.23400000000000001,
+          "Sign": -1
+        }
+      }
+    },
+    {
+      "MrID": "MR000003",
+      "Label": "Mittenma\u00DF",
+      "Abbreviation": "l_c",
+      "ComplexReal": {
+        "Unit": "_milli_meter",
+        "Value": {
+          "DecimalPositions": 6,
+          "Float": 24.999766000000001,
+          "Sign": 1
+        }
+      }
+    },
+    {
+      "MrID": "MR000004",
+      "Label": "Abweichungsspanne",
+      "Abbreviation": "v",
+      "ComplexReal": {
+        "Unit": "_micro_meter",
+        "Value": {
+          "DecimalPositions": 3,
+          "Float": 0.050000000000000003,
+          "Sign": 1
+        }
+      }
+    }
+  ],
+  "Error": [
+    ""
+  ]
+}
